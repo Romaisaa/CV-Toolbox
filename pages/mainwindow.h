@@ -5,6 +5,7 @@
 #include "page3.h"
 #include "page2.h"
 #include "page1.h"
+#include"pages/page6.h"
 #include "pages/page4.h"
 #include "clickable.h"
 

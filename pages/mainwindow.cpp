@@ -45,6 +45,10 @@ MainWindow::MainWindow(QWidget *parent)
 //    ui->stackedWidget->insertWidget(1,new page2());
     ui->stackedWidget->insertWidget(2,new page3());
     ui->stackedWidget->insertWidget(3,new page4());
+   //PAGE 5//
+    ui->stackedWidget->insertWidget(5,new Page6());
+
+
     ui->stackedWidget->setCurrentIndex(0);
     connect(ui->pushButton, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(0);
@@ -57,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent)
         });
     connect(ui->pushButton_4, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(3);
+        });
+    connect(ui->pushButton_6, &QPushButton::clicked, ui->stackedWidget, [=]() {
+            ui->stackedWidget->setCurrentIndex(5);
         });
 
 
