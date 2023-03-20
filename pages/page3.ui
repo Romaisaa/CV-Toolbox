@@ -87,11 +87,7 @@
                 <string/>
                </property>
                <property name="styleSheet">
-                <string notr="true">QLabel:hover {
-  background-color: #33b78620;
-	border: 1px solid #d66d31;
-
-}</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string/>

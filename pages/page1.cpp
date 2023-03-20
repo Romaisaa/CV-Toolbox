@@ -9,6 +9,10 @@ page1::page1(QWidget *parent) :
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
     ui->label1_1->setText("Noise Value");
+    QPixmap pixmap(":/resources/resources/handpointing.png");
+    QPoint hotSpot(11, 10);
+    QCursor cursor(pixmap, hotSpot.x(), hotSpot.y());
+    ui->image->setCursor(cursor);
 }
 
 page1::~page1()

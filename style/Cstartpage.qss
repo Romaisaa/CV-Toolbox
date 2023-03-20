@@ -385,7 +385,8 @@ QComboBox::down-arrow
 
 /*-----QSpinBox & QDateTimeEdit-----*/
 QSpinBox,
-QDateTimeEdit 
+QDateTimeEdit,
+QDoubleSpinBox
 {
     background-color: #131313;
 	color : #eee;
@@ -397,8 +398,10 @@ QDateTimeEdit
 }
 
 
+
 QSpinBox::up-button, 
-QDateTimeEdit::up-button
+QDateTimeEdit::up-button,
+QDoubleSpinBox::up-button
 {
 	border-top-right-radius:2px;
 	background-color: #777777;
@@ -409,7 +412,8 @@ QDateTimeEdit::up-button
 
 
 QSpinBox::up-button:hover, 
-QDateTimeEdit::up-button:hover
+QDateTimeEdit::up-button:hover,
+QDoubleSpinBox::up-button:hover
 {
 	background-color: #585858;
 
@@ -417,7 +421,8 @@ QDateTimeEdit::up-button:hover
 
 
 QSpinBox::up-button:pressed, 
-QDateTimeEdit::up-button:pressed
+QDateTimeEdit::up-button:pressed,
+QDoubleSpinBox::up-button:pressed
 {
 	background-color: #252525;
     width: 16px; 
@@ -427,7 +432,8 @@ QDateTimeEdit::up-button:pressed
 
 
 QSpinBox::up-arrow,
-QDateTimeEdit::up-arrow
+QDateTimeEdit::up-arrow,
+QDoubleSpinBox::up-arrow
 {
     image: url(://arrow-up.png);
     width: 7px;
@@ -437,7 +443,8 @@ QDateTimeEdit::up-arrow
 
 
 QSpinBox::down-button, 
-QDateTimeEdit::down-button
+QDateTimeEdit::down-button,
+QDoubleSpinBox::down-button
 {
 	border-bottom-right-radius:2px;
 	background-color: #777777;
@@ -448,7 +455,8 @@ QDateTimeEdit::down-button
 
 
 QSpinBox::down-button:hover, 
-QDateTimeEdit::down-button:hover
+QDateTimeEdit::down-button:hover,
+QDoubleSpinBox::down-button:hover
 {
 	background-color: #585858;
 
@@ -456,7 +464,8 @@ QDateTimeEdit::down-button:hover
 
 
 QSpinBox::down-button:pressed, 
-QDateTimeEdit::down-button:pressed
+QDateTimeEdit::down-button:pressed,
+QDoubleSpinBox::down-button:pressed
 {
 	background-color: #252525;
     width: 16px; 
@@ -466,7 +475,8 @@ QDateTimeEdit::down-button:pressed
 
 
 QSpinBox::down-arrow,
-QDateTimeEdit::down-arrow
+QDateTimeEdit::down-arrow,
+QDoubleSpinBox::down-arrow
 {
     image: url(://arrow-down.png);
     width: 7px;
@@ -971,8 +981,9 @@ QProgressBar
 {
     border: 1px solid #666666;
     text-align: center;
-	color: #000;
+	color: #ffffff;
 	font-weight: bold;
+	border-radius: 5px;
 
 }
 
@@ -980,8 +991,22 @@ QProgressBar
 QProgressBar::chunk
 {
     background-color: #d66d31;
-    width: 30px;
     margin: 0.5px;
+	border-radius: 5px;
 
 }
+Clickable:hover {
+background-color: #33b78620;
+	border: 1px solid #d66d31;
+	image: url(:/resources/resources/icons8-upload-32.png);
+	
+
+}
+Clickable {
+
+	image: url(:/resources/resources/icons8-upload-32.png);
+	
+
+}
+
 

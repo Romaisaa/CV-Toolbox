@@ -1,6 +1,10 @@
 <RCC>
     <qresource prefix="/resources">
         <file>resources/icons8-upload-32.png</file>
+        <file>resources/cursor-png-1108.png</file>
+        <file>resources/default.png</file>
+        <file>resources/handpointing.png</file>
+        <file>resources/textcursor.png</file>
     </qresource>
     <qresource prefix="/icons">
         <file>resources/icons8-upload-32.png</file>

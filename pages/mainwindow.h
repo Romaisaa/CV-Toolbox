@@ -5,6 +5,8 @@
 #include "page3.h"
 #include "page2.h"
 #include "page1.h"
+#include "pages/page4.h"
+#include "clickable.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

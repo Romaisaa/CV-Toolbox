@@ -461,22 +461,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="Clickable" name="image">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
            <property name="styleSheet">
-            <string notr="true">QLabel:hover {
-background-color: #33b78620;
-	border: 1px solid #d66d31;
-
-}
+            <string notr="true">
 </string>
            </property>
            <property name="text">
             <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../resources.qrc">:/resources/resources/icons8-upload-32.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -526,8 +516,6 @@ background-color: #33b78620;
    </slots>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
