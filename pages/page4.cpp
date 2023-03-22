@@ -21,7 +21,7 @@ void page4::on_image1_clicked()
     fileName = QFileDialog::getOpenFileName(this, "Open Image", "", "Image Files (*.png *.jpg *.bmp *.jpeg)");
     if (!fileName.isEmpty()) {
         // read colored image
-        img = cv::imread(fileName.toStdString());
+        img = cv::imread(fileName.toStdString(), cv::IMREAD_COLOR);
         QImage qimage(img.data, img.cols, img.rows, QImage::Format_BGR888);
         image = QPixmap::fromImage(qimage);
         // using canny with image
@@ -78,6 +78,11 @@ void page4::on_generateBtn_clicked()
         std::vector<cv::Vec3d> circles;
         Hough::HoughCircle(edges, circles, ui->thresholdSpin->value(), ui->circleMinRadiusSpin->value(), ui->circleMaxRadiusSpin->value(), ui->circleRadiusStepSpin->value(), ui->progressBar);
         Hough::drawCircles(output, circles, cv::Scalar(0,0,255));
+    }else if(ui->comboBox->currentIndex() ==2){
+        std::vector<cv::Vec6d> ellipses;
+        Hough::HoughEllipse(edges, ellipses, ui->thresholdSpin->value(), ui->ellipseMinRadius->value(), ui->ellipseMaxRadius->value(), ui->progressBar);
+        Hough::drawEllipse(output, ellipses, cv::Scalar(0,0,255));
+
     }
 
 
