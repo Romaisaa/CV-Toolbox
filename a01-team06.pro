@@ -15,6 +15,7 @@ SOURCES += \
     CV/frequency.cpp \
 #    Plot/plotter.cpp \
     CV/hough.cpp \
+    CV/snake.cpp \
     pages/page4.cpp \
 #    qcustomplot.cpp \
     clickable.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     CV/frequency.h \
 #    Plot/plotter.h \
     CV/hough.h \
+    CV/snake.h \
     pages/page4.h \
 #    qcustomplot.h \
     clickable.h \
@@ -48,14 +50,14 @@ FORMS += \
     pages/page1.ui \
     pages/page6.ui
 
-INCLUDEPATH += C:\Users\youss\Documents\libraries\opencv\build\include
+INCLUDEPATH += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\build\include
 
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_core470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_highgui470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgcodecs470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgproc470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_features2d470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_calib3d470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_core470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_highgui470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_imgcodecs470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_imgproc470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_features2d470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_calib3d470.dll
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
