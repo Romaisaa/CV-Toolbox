@@ -8,7 +8,7 @@
 #include"pages/page6.h"
 #include "pages/page4.h"
 #include"page5.h"
-#include "clickable.h"
+#include "utilities/clickable.h"
 #include <QFile>
 #include <QDir>
 #include <QString>

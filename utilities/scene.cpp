@@ -33,7 +33,7 @@ QPointF Scene::getCenter()
 void Scene::drawCircle()
 {
 
-    this->addEllipse(this->center.x()-0.5*this->rad, this->center.y()-0.5*this->rad, this->rad*1.0, this->rad*1.0,
+    this->addEllipse(this->center.x()-this->rad, this->center.y()-this->rad, this->rad*2.0, this->rad*2.0,
                      QPen());
 
 }

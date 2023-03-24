@@ -15,7 +15,7 @@ public:
     static vector<Point> active_contour(Mat inputimage, Mat &outputimage,
                                 Point center, int radius,
                                 int numOfIterations, int numOfPoints,
-                                int window_size, double alpha, double beta, double gamma,QLabel * label);
+                                int window_size, double alpha, double beta, double gamma);
 
     static double calculate_contour_area(vector<Point> snake_points);
     static double calculate_contour_perimeter(vector<Point> snake_points);

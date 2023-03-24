@@ -88,7 +88,7 @@
       <item row="0" column="4">
        <widget class="QSpinBox" name="raduis">
         <property name="maximum">
-         <number>200</number>
+         <number>1000</number>
         </property>
         <property name="value">
          <number>50</number>
@@ -222,6 +222,9 @@
         <property name="singleStep">
          <number>2</number>
         </property>
+        <property name="value">
+         <number>11</number>
+        </property>
        </widget>
       </item>
       <item row="0" column="8">
@@ -248,10 +251,18 @@
        </widget>
       </item>
       <item row="3" column="6">
-       <widget class="QDoubleSpinBox" name="beta"/>
+       <widget class="QDoubleSpinBox" name="beta">
+        <property name="value">
+         <double>3.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item row="3" column="4">
-       <widget class="QDoubleSpinBox" name="alpha"/>
+       <widget class="QDoubleSpinBox" name="alpha">
+        <property name="value">
+         <double>10.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item row="0" column="9">
        <widget class="QSpinBox" name="numItr">
@@ -259,7 +270,7 @@
          <number>1000</number>
         </property>
         <property name="value">
-         <number>99</number>
+         <number>300</number>
         </property>
        </widget>
       </item>
@@ -287,7 +298,11 @@
        </widget>
       </item>
       <item row="3" column="9">
-       <widget class="QDoubleSpinBox" name="gamma"/>
+       <widget class="QDoubleSpinBox" name="gamma">
+        <property name="value">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item row="0" column="11" rowspan="4">
        <widget class="QPushButton" name="generate_btn">

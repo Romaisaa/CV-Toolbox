@@ -13,17 +13,17 @@ SOURCES += \
     CV/histogram.cpp \
     CV/filters.cpp \
     CV/frequency.cpp \
-#    Plot/plotter.cpp \
+    Plot/plotter.cpp \
     CV/hough.cpp \
     CV/snake.cpp \
-#    pages/page4.cpp \
-#    qcustomplot.cpp \
-    clickable.cpp \
-    scene.cpp \
+    pages/page4.cpp \
+    utilities/qcustomplot.cpp \
+    utilities/clickable.cpp \
+    utilities/scene.cpp \
     main.cpp \
     pages/page3.cpp \
     pages/mainwindow.cpp \
-#    pages/page2.cpp \
+    pages/page2.cpp \
     pages/page1.cpp \
     pages/page5.cpp \
     pages/page6.cpp
@@ -33,37 +33,37 @@ HEADERS += \
     CV/histogram.h \
     CV/filters.h \
     CV/frequency.h \
-#    Plot/plotter.h \
+    Plot/plotter.h \
     CV/hough.h \
     CV/snake.h \
-#    pages/page4.h \
-#    qcustomplot.h \
-    clickable.h \
+    pages/page4.h \
+    utilities/qcustomplot.h \
+    utilities/clickable.h \
     pages/page3.h \
     pages/mainwindow.h \
-#    pages/page2.h \
+    pages/page2.h \
     pages/page1.h \
     pages/page5.h \
     pages/page6.h  \
-    scene.h
+    utilities/scene.h
 
 FORMS += \
-#    pages/page4.ui \
+    pages/page4.ui \
     pages/page3.ui \
     pages/mainwindow.ui \
-#    pages/page2.ui \
+    pages/page2.ui \
     pages/page1.ui \
     pages/page5.ui \
     pages/page6.ui
 
-INCLUDEPATH += C:\opencv\build\include
+INCLUDEPATH += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\build\include
 
-LIBS += C:\opencv\release\bin\libopencv_core470.dll
-LIBS += C:\opencv\release\bin\libopencv_highgui470.dll
-LIBS += C:\opencv\release\bin\libopencv_imgcodecs470.dll
-LIBS += C:\opencv\release\bin\libopencv_imgproc470.dll
-LIBS += C:\opencv\release\bin\libopencv_features2d470.dll
-LIBS += C:\opencv\release\bin\libopencv_calib3d470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_core470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_highgui470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_imgcodecs470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_imgproc470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_features2d470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_calib3d470.dll
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

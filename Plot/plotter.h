@@ -1,8 +1,7 @@
 #ifndef PLOTTER_H
 #define PLOTTER_H
-#include "qcustomplot.h"
 #include <QVector>
-
+#include "utilities/qcustomplot.h"
 class plotter
 {
 public:

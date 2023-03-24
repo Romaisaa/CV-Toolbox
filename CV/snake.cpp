@@ -56,25 +56,28 @@ void snake::snake_operation(Mat image, vector<Point>& curve, int window_size, do
     int windowIndex = (window_size - 1) / 2;
     int numPoints = curve.size();
     vector<Point> newCurve(numPoints);
-    for (int i = 0; i < numPoints; i++) {
-        Point pt = curve[i];
-        Point prevPt = curve[(i-1+numPoints)%numPoints];
-        Point nextPt = curve[(i+1)%numPoints];
-        double minEnergy = DBL_MAX; // max value can a double variable hold
-        Point newPt = pt;
-        // Try moving the point in different directions and choose the one with the minimum energy
-        for (int dx = -windowIndex; dx <= windowIndex; dx++) {
-            for (int dy = -windowIndex; dy <= windowIndex; dy++) {
-                Point movePt(pt.x + dx, pt.y + dy);
-                double energy = calculate_point_enegy(image, movePt, prevPt, nextPt, alpha, beta, gamma);
-                if (energy < minEnergy) {
-                    minEnergy = energy;
-                    newPt = movePt;
+
+        for (int i = 0; i < numPoints; i++) {
+            Point pt = curve[i];
+            Point prevPt = curve[(i-1+numPoints)%numPoints];
+            Point nextPt = curve[(i+1)%numPoints];
+            double minEnergy = DBL_MAX; // max value can a double variable hold
+            Point newPt = pt;
+            // Try moving the point in different directions and choose the one with the minimum energy
+            for (int dx = -windowIndex; dx <= windowIndex; dx++) {
+                for (int dy = -windowIndex; dy <= windowIndex; dy++) {
+                    Point movePt(pt.x + dx, pt.y + dy);
+                    double energy = calculate_point_enegy(image, movePt, prevPt, nextPt, alpha, beta, gamma);
+                    if (energy < minEnergy) {
+                        minEnergy = energy;
+                        newPt = movePt;
+                    }
                 }
             }
+            newCurve[i] = newPt;
         }
-        newCurve[i] = newPt;
-    }
+
+
     curve = newCurve;
 }
 
@@ -147,7 +150,11 @@ void snake::draw_contours(Mat image, Mat &outputimage, vector<Point> snake_point
 vector<Point> snake::active_contour(Mat inputimage, Mat &outputimage,
                             Point center, int radius,
                             int numOfIterations, int numOfPoints,
-                            int window_size, double alpha, double beta, double gamma, QLabel*label){
+                            int window_size, double alpha, double beta, double gamma){
+
+    cout << center << endl;
+    cout << (inputimage.cols / 2) << " " << (inputimage.rows / 2) << endl;
+
 
     vector<Point> curve = initialize_contours(center, radius, numOfPoints);
 
@@ -159,14 +166,9 @@ vector<Point> snake::active_contour(Mat inputimage, Mat &outputimage,
     // Iterate for multiple iterations
     for (int i = 0; i < numOfIterations; i++) {
         snake_operation(grayimage, curve, window_size, alpha, beta, gamma);
-        draw_contours(inputimage, outputimage, curve);
-        QImage qimage(outputimage.data, outputimage.cols, outputimage.rows,outputimage.step,QImage::Format_BGR888);
-        QPixmap* image = new QPixmap(QPixmap::fromImage(qimage));
-        int w = label->width();
-        int h = label->height();
-        label->setPixmap(image->scaled(w,h,Qt::KeepAspectRatio));
     }
 
-//    draw_contours(inputimage, outputimage, curve);
+    draw_contours(inputimage, outputimage, curve);
+
     return curve;
 }

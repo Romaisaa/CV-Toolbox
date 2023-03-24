@@ -31,7 +31,7 @@ void page5::on_window_size_valueChanged(int arg1)
 
 void page5::on_upload_btn_clicked()
 {
-    Img= QFileDialog::getOpenFileName(this, "Open Image", "", "Image Files (*.png *.jpg *.bmp)");
+    Img= QFileDialog::getOpenFileName(this, "Open Image", "", "Image Files (*.png *.jpg *.bmp *.jpeg)");
     QImage image(Img);
     scene = new Scene();
     scene->setRad(ui->raduis->value());
@@ -46,7 +46,6 @@ void page5::updateImage(){
         ui->graphicsView->setScene(scene);
         ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
     }
-
 }
 
 
@@ -73,12 +72,13 @@ void page5::resizeEvent(QResizeEvent *e)
 
 void page5::on_generate_btn_clicked()
 {
+
     Mat imageCv= cv::imread(Img.toStdString(),IMREAD_COLOR);
     Mat output;
     Point center=  Point_<double>(scene->getCenter().x(), scene->getCenter().y());
 
     vector<Point> s_vector =snake::active_contour(imageCv,output,center,ui->raduis->value(),ui->numItr->value(),ui->num_points->value(),
-                                                  ui->window_size->value(),ui->alpha->value(),ui->beta->value(),ui->gamma->value(),ui->output_label);
+                                                  ui->window_size->value(),ui->alpha->value(),ui->beta->value(),ui->gamma->value());
 
     double area = snake::calculate_contour_area(s_vector);
     double perimeter=snake::calculate_contour_perimeter(s_vector);
@@ -87,13 +87,10 @@ void page5::on_generate_btn_clicked()
     ui->area->setValue(area);
     ui->perimeter->setValue(perimeter);
 
-//    QImage qimage(output.data, output.cols, output.rows,output.step,QImage::Format_BGR888);
-//    QPixmap* image = new QPixmap(QPixmap::fromImage(qimage));
-//    int w = ui->output_label->width();
-//    int h = ui->output_label->height();
-//    ui->output_label->setPixmap(image->scaled(w,h,Qt::KeepAspectRatio));
-
-
-
+    QImage qimage(output.data, output.cols, output.rows,output.step,QImage::Format_BGR888);
+    QPixmap* image = new QPixmap(QPixmap::fromImage(qimage));
+    int w = ui->output_label->width();
+    int h = ui->output_label->height();
+    ui->output_label->setPixmap(image->scaled(w,h,Qt::KeepAspectRatio));
 }
 

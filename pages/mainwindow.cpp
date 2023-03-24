@@ -9,11 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QString fileName = "Cstartpage.qss";
-    QString projectDirPath =__FILE__;
-    projectDirPath+="/../../style";
-    QString filePath = QDir(projectDirPath).absoluteFilePath(fileName);
-    QFile f(filePath);
+    QFile f(":/resources/style/Cstartpage.qss");
     if ( !f.exists() )
     {
        qWarning() << "Unable to set dark stylesheet, file not found";
@@ -28,20 +24,13 @@ MainWindow::MainWindow(QWidget *parent)
     QPoint hotSpot(11, 10);
     QCursor cursor(pixmap, hotSpot.x(), hotSpot.y());
     this->setCursor(cursor);
-
-
-    QButtonGroup *group = new QButtonGroup();
-    group->addButton(ui->pushButton);
-    group->addButton(ui->pushButton2);
-    group->addButton(ui->pushButton_3);
-    group->addButton(ui->pushButton_4);
-
+    this->setWindowTitle("CV ToolKit");
 
     ui->stackedWidget->insertWidget(0,new page1());
-//    ui->stackedWidget->insertWidget(1,new page2());
+    ui->stackedWidget->insertWidget(1,new page2());
     ui->stackedWidget->insertWidget(2,new page3());
-    //ui->stackedWidget->insertWidget(3,new page4());
-   ui->stackedWidget->insertWidget(4,new page5());
+    ui->stackedWidget->insertWidget(3,new page4());
+    ui->stackedWidget->insertWidget(4,new page5());
     ui->stackedWidget->insertWidget(5,new Page6());
 
 
@@ -49,15 +38,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(0);
         });
-//    connect(ui->pushButton2, &QPushButton::clicked, ui->stackedWidget, [=]() {
-//            ui->stackedWidget->setCurrentIndex(1);
-//        });
+    connect(ui->pushButton2, &QPushButton::clicked, ui->stackedWidget, [=]() {
+            ui->stackedWidget->setCurrentIndex(1);
+        });
     connect(ui->pushButton_3, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(2);
         });
-//    connect(ui->pushButton_4, &QPushButton::clicked, ui->stackedWidget, [=]() {
-//            ui->stackedWidget->setCurrentIndex(3);
-//        });
+    connect(ui->pushButton_4, &QPushButton::clicked, ui->stackedWidget, [=]() {
+            ui->stackedWidget->setCurrentIndex(3);
+        });
     connect(ui->pushButton_5, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(4);
         });

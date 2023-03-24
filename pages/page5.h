@@ -2,7 +2,7 @@
 #define PAGE5_H
 
 #include <QWidget>
-#include "Scene.h"
+#include "utilities/scene.h"
 #include <QGraphicsScene>
 #include <QFileDialog>
 #include "CV/snake.h"
