@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <opencv2/opencv.hpp>
-
+#include <qlabel.h>
+#include <unistd.h>
 using namespace cv;
 using namespace std;
 
@@ -11,10 +12,10 @@ class snake
 {
 public:
     snake();
-    vector<Point> active_contour(Mat inputimage, Mat &outputimage,
+    static vector<Point> active_contour(Mat inputimage, Mat &outputimage,
                                 Point center, int radius,
                                 int numOfIterations, int numOfPoints,
-                                int window_size, double alpha, double beta, double gamma);
+                                int window_size, double alpha, double beta, double gamma,QLabel * label);
 
     static double calculate_contour_area(vector<Point> snake_points);
     static double calculate_contour_perimeter(vector<Point> snake_points);
@@ -30,7 +31,7 @@ private:
     static double calculate_point_enegy(Mat image, Point point, Point previousPoint, Point nextPoint, double alpha, double beta, double gamma);
 
     static void snake_operation(Mat image, vector<Point>& curve, int window_size, double alpha, double beta, double gamma);
-    static void draw_contours(Mat image, Mat &outputimage, vector<Point> snake_points);
+    static void draw_contours(Mat image, Mat &outputimage, vector<Point> snake_points,QLabel * label);
 };
 
 #endif // SNAKE_H

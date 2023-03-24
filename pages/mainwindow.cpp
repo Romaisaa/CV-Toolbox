@@ -1,11 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QFile>
-#include <QDir>
-#include <QString>
-#include <QDebug>
-#include <QButtonGroup>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -44,8 +40,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->insertWidget(0,new page1());
 //    ui->stackedWidget->insertWidget(1,new page2());
     ui->stackedWidget->insertWidget(2,new page3());
-    ui->stackedWidget->insertWidget(3,new page4());
-   //PAGE 5//
+    //ui->stackedWidget->insertWidget(3,new page4());
+   ui->stackedWidget->insertWidget(4,new page5());
     ui->stackedWidget->insertWidget(5,new Page6());
 
 
@@ -59,8 +55,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_3, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(2);
         });
-    connect(ui->pushButton_4, &QPushButton::clicked, ui->stackedWidget, [=]() {
-            ui->stackedWidget->setCurrentIndex(3);
+//    connect(ui->pushButton_4, &QPushButton::clicked, ui->stackedWidget, [=]() {
+//            ui->stackedWidget->setCurrentIndex(3);
+//        });
+    connect(ui->pushButton_5, &QPushButton::clicked, ui->stackedWidget, [=]() {
+            ui->stackedWidget->setCurrentIndex(4);
         });
     connect(ui->pushButton_6, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(5);

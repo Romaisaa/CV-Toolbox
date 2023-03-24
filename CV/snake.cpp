@@ -133,13 +133,19 @@ double snake::calculate_contour_perimeter(vector<Point> snake_points)
     return distance_sum;
 }
 
-void snake::draw_contours(Mat image, Mat &outputimage, vector<Point> snake_points){
+void snake::draw_contours(Mat image, Mat &outputimage, vector<Point> snake_points,QLabel*label){
     outputimage = image.clone();
     for (int i = 0; i < snake_points.size(); i++) {
         circle(outputimage, snake_points[i], 4, Scalar(0, 0, 255), -1);
+
         if (i > 0) {
             line(outputimage, snake_points[i-1], snake_points[i], Scalar(255, 0, 0), 2);
         }
+        QImage qimage(outputimage.data, outputimage.cols, outputimage.rows,outputimage.step,QImage::Format_BGR888);
+        QPixmap* image = new QPixmap(QPixmap::fromImage(qimage));
+        int w = label->width();
+        int h = label->height();
+        label->setPixmap(image->scaled(w,h,Qt::KeepAspectRatio));
     }
     line(outputimage, snake_points[0], snake_points[snake_points.size()-1], Scalar(255, 0, 0), 2);
 }
@@ -147,7 +153,7 @@ void snake::draw_contours(Mat image, Mat &outputimage, vector<Point> snake_point
 vector<Point> snake::active_contour(Mat inputimage, Mat &outputimage,
                             Point center, int radius,
                             int numOfIterations, int numOfPoints,
-                            int window_size, double alpha, double beta, double gamma){
+                            int window_size, double alpha, double beta, double gamma, QLabel*label){
 
     vector<Point> curve = initialize_contours(center, radius, numOfPoints);
 
@@ -159,8 +165,10 @@ vector<Point> snake::active_contour(Mat inputimage, Mat &outputimage,
     // Iterate for multiple iterations
     for (int i = 0; i < numOfIterations; i++) {
         snake_operation(grayimage, curve, window_size, alpha, beta, gamma);
+        draw_contours(inputimage, outputimage, curve,label);
+
     }
 
-    draw_contours(inputimage, outputimage, curve);
+//    draw_contours(inputimage, outputimage, curve);
     return curve;
 }
