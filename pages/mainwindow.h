@@ -2,12 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "page3.h"
-#include "page2.h"
-#include "page1.h"
-#include"pages/page6.h"
+#include "pages/page3.h"
+//#include "pages/page2.h"
+#include "pages/page1.h"
+#include "pages/page6.h"
 #include "pages/page4.h"
-#include"page5.h"
+#include "pages/page5.h"
+#include "pages/page7.h"
+#include "pages/page8.h"
 #include "utilities/clickable.h"
 #include <QFile>
 #include <QDir>
