@@ -588,7 +588,7 @@ background-color: #33b78620;
   <customwidget>
    <class>Clickable</class>
    <extends>QLabel</extends>
-   <header location="global">clickable.h</header>
+   <header location="global">utilities/clickable.h</header>
    <slots>
     <signal>clicked()</signal>
    </slots>
@@ -596,7 +596,7 @@ background-color: #33b78620;
   <customwidget>
    <class>QCustomPlot</class>
    <extends>QWidget</extends>
-   <header>qcustomplot.h</header>
+   <header>utilities/qcustomplot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

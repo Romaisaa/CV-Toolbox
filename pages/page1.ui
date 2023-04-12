@@ -462,8 +462,7 @@
          <item>
           <widget class="Clickable" name="image">
            <property name="styleSheet">
-            <string notr="true">
-</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string/>
@@ -510,7 +509,7 @@
   <customwidget>
    <class>Clickable</class>
    <extends>QLabel</extends>
-   <header location="global">clickable.h</header>
+   <header location="global">utilities/clickable.h</header>
    <slots>
     <signal>clicked()</signal>
    </slots>
