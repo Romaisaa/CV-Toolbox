@@ -78,7 +78,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+       <widget class="QDoubleSpinBox" name="sigmaSpin">
+        <property name="value">
+         <double>1.600000000000000</double>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_2">
@@ -94,7 +98,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+       <widget class="QDoubleSpinBox" name="KSpin">
+        <property name="value">
+         <double>2.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_3">
@@ -110,7 +118,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+       <widget class="QDoubleSpinBox" name="ContrastSpin">
+        <property name="value">
+         <double>0.030000000000000</double>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_4">
@@ -126,7 +138,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+       <widget class="QDoubleSpinBox" name="EdgeSpin">
+        <property name="value">
+         <double>10.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_5">
@@ -142,7 +158,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
+       <widget class="QDoubleSpinBox" name="MagSpin"/>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton">

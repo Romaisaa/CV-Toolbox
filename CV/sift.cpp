@@ -501,3 +501,25 @@ void Sift::SIFT_descriptors(vector<vector<float>>&descriptors, vector<vector<Mat
     get_luminosity_invariance(descriptors,magnitude_threshold);
 
 }
+
+vector<KeyPoint> Sift::extract_keypoints(const vector<vector<Mat>>& descriptors) {
+    vector<KeyPoint> keypoints;
+
+    // iterate over each element in the vector of vectors
+    for (const auto& descriptor : descriptors) {
+        // iterate over each Mat in the current vector
+        for (const auto& mat : descriptor) {
+
+            // convert the Mat to a vector of keypoints
+            vector<KeyPoint> kps;
+            Ptr<Feature2D> detector = ORB::create();
+
+            detector->detect(mat, kps);
+
+            // append the keypoints to the output vector
+            keypoints.insert(keypoints.end(), kps.begin(), kps.end());
+        }
+    }
+
+    return keypoints;
+}

@@ -9,6 +9,8 @@
 #include <QLabel>
 #include <QImage>
 #include <map>
+#include "CV/sift.h"
+#include "CV/matching.h"
 namespace Ui {
 class page8;
 }
@@ -26,6 +28,10 @@ private slots:
 
     void on_image2_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::page8 *ui;
     QPixmap image1;
@@ -35,7 +41,14 @@ private:
     QString fileName1;
     QString fileName2;
     void rescaleImg(QLabel* imgSlot, QPixmap& image);
-    void uploadImg(cv::Mat img);
+    void uploadImg(cv::Mat img, QLabel* imgSlot);
+    std::vector<std::vector<cv::Mat>> keypoints1;
+    std::vector<std::vector<cv::Mat>>scale_space1;
+    std::vector<std::vector<float>> descriptors1;
+    std::vector<std::vector<cv::Mat>> keypoints2;
+    std::vector<std::vector<cv::Mat>>scale_space2;
+    std::vector<std::vector<float>> descriptors2;
+    cv::Mat vectorToMat(const vector<vector<float>>& input);
 };
 
 #endif // PAGE8_H
