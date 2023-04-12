@@ -13,6 +13,7 @@ SOURCES += \
     CV/histogram.cpp \
     CV/filters.cpp \
     CV/frequency.cpp \
+    CV/sift.cpp \
     Plot/plotter.cpp \
     CV/hough.cpp \
     CV/snake.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     CV/histogram.h \
     CV/filters.h \
     CV/frequency.h \
+    CV/sift.h \
     Plot/plotter.h \
     CV/hough.h \
     CV/snake.h \
@@ -56,14 +58,14 @@ FORMS += \
     pages/page5.ui \
     pages/page6.ui
 
-INCLUDEPATH += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\build\include
+INCLUDEPATH += C:\opencv\build\include
 
-LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_core470.dll
-LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_highgui470.dll
-LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_imgcodecs470.dll
-LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_imgproc470.dll
-LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_features2d470.dll
-LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_calib3d470.dll
+LIBS += C:\opencv\release\bin\libopencv_core470.dll
+LIBS += C:\opencv\release\bin\libopencv_highgui470.dll
+LIBS += C:\opencv\release\bin\libopencv_imgcodecs470.dll
+LIBS += C:\opencv\release\bin\libopencv_imgproc470.dll
+LIBS += C:\opencv\release\bin\libopencv_features2d470.dll
+LIBS += C:\opencv\release\bin\libopencv_calib3d470.dll
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
