@@ -210,16 +210,15 @@ void Sift:: draw_keypoints(cv::Mat& I, vector<vector<cv::Mat>>& keypoints) {
 
 
 
-void Sift:: sift_keypoints(cv::Mat& input_img,cv::Mat& keypoints_img,float sigma, float contrast_threshold, float edge_threshold, float k) {
-    cv::Mat gray_img_converted;
-    vector<vector<cv::Mat>> scale_space(4, vector<cv::Mat>(5));
-    vector<vector<cv::Mat>> DoG(4, vector<cv::Mat>(4));
-    vector<vector<cv::Mat>> keypoints(4, vector<cv::Mat>(2));
-
-
+void Sift:: sift_keypoints(Mat& input_img,Mat& keypoints_img, vector<vector<Mat>>&keypoints, vector<vector<Mat>>&scale_space,float sigma, float contrast_threshold, float edge_threshold, float k) {
+    //Handleing / make sure that input is gray scaled image nd convert to mat<float>
+    Mat gray_img_converted;
     char_to_float(input_img, gray_img_converted);
+    scale_space= vector<vector<Mat>>(4, vector<Mat>(5));
     get_scale_space(gray_img_converted, sigma,scale_space,k);
+    vector<vector<Mat>> DoG(4, vector<Mat>(4));
     get_DoG(scale_space,DoG);
+    keypoints= vector<vector<Mat>>(4, vector<Mat>(2));
     get_keypoints(DoG,keypoints);
     remove_low_contrast(keypoints, DoG,contrast_threshold);
     remove_edges(keypoints, DoG, edge_threshold);
@@ -228,6 +227,9 @@ void Sift:: sift_keypoints(cv::Mat& input_img,cv::Mat& keypoints_img,float sigma
 
 
 }
+
+
+
 float Sift::get_angle(float x, float y) {
     float ang = atan2(y, x);
 

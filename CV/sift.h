@@ -16,7 +16,7 @@ using namespace cv;
 class Sift
 {
 public:
-    static void sift_keypoints(cv::Mat& input_img,cv::Mat& keypoints_img,float sigma, float contrast_threshold, float edge_threshold, float k);
+    static void sift_keypoints(Mat& input_img,Mat& keypoints_img, vector<vector<Mat>>&keypoints, vector<vector<Mat>>&scale_space,float sigma, float contrast_threshold, float edge_threshold, float k);
     static void SIFT_descriptors(vector<vector<float>>&descriptors, vector<vector<cv::Mat>> scale_space, vector<vector<cv::Mat>>& keypoints,float magnitude_threshold,float sigma,float k);
 
 
