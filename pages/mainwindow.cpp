@@ -27,20 +27,21 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("CV ToolKit");
 
     ui->stackedWidget->insertWidget(0,new page1());
-    ui->stackedWidget->insertWidget(1,new page2());
+//    ui->stackedWidget->insertWidget(1,new page2());
     ui->stackedWidget->insertWidget(2,new page3());
     ui->stackedWidget->insertWidget(3,new page4());
     ui->stackedWidget->insertWidget(4,new page5());
     ui->stackedWidget->insertWidget(5,new Page6());
-
+    ui->stackedWidget->insertWidget(6,new page7());
+    ui->stackedWidget->insertWidget(7,new page8());
 
     ui->stackedWidget->setCurrentIndex(0);
     connect(ui->pushButton, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(0);
         });
-    connect(ui->pushButton2, &QPushButton::clicked, ui->stackedWidget, [=]() {
-            ui->stackedWidget->setCurrentIndex(1);
-        });
+//    connect(ui->pushButton2, &QPushButton::clicked, ui->stackedWidget, [=]() {
+//            ui->stackedWidget->setCurrentIndex(1);
+//        });
     connect(ui->pushButton_3, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(2);
         });
@@ -53,7 +54,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_6, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(5);
         });
-
+    connect(ui->pushButton_7, &QPushButton::clicked, ui->stackedWidget, [=]() {
+            ui->stackedWidget->setCurrentIndex(6);
+        });
+    connect(ui->pushButton_8, &QPushButton::clicked, ui->stackedWidget, [=]() {
+            ui->stackedWidget->setCurrentIndex(7);
+        });
 
     QPixmap pointPix(":/resources/resources/handpointing.png");
     QPoint hotSpot2(11, 10);
