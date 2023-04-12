@@ -56,7 +56,7 @@ void Harris:: plotCorners(const cv::Mat& input, cv::Mat& output, cv::Mat& harris
         }
     }
 }
-void Harris:: harrisCornerDetector(const cv::Mat& inputImage, cv::Mat& outputImage, double threshold, int windowSize)
+void Harris:: harrisCornerDetector(const cv::Mat& inputImage, cv::Mat& outputImage, double threshold, int windowSize,bool isLambda)
 {
     // Compute the x and y gradients of the image
     cv::Mat gradientX, gradientY;
@@ -79,8 +79,15 @@ void Harris:: harrisCornerDetector(const cv::Mat& inputImage, cv::Mat& outputIma
     cv::Mat trace = sumXX + sumYY;
 
     // Compute the Harris response for each pixel
+    // Choose using lamda or harruis simplified corner
     cv::Mat harrisResponse;
-    divide(determinant, trace, harrisResponse);
+    if (isLambda){
+        cv::Mat trace_squared = trace.mul(trace);
+        harrisResponse=determinant-0.04*trace_squared;
+    }
+    else
+        divide(determinant, trace, harrisResponse);
+
 
     // Threshold the Harris response and mark the corners on the output image
     plotCorners(inputImage, outputImage, harrisResponse, threshold);

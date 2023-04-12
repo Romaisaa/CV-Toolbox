@@ -31,10 +31,13 @@ private slots:
 
     void on_ksize_valueChanged(int arg1);
 
+    void on_comboBox_currentIndexChanged(int index);
+
 private:
     Ui::Page6 *ui;
     cv::Mat grayImg;
     QString img_filename;
+    bool operator_type=true;
 
 };
 

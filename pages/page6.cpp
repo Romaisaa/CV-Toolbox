@@ -32,7 +32,7 @@ void Page6::on_input_label_clicked()
 void Page6::updateOutput(){
     if (!img_filename.isEmpty()) {
     cv::Mat outputImage;
-    Harris::harrisCornerDetector(grayImg,outputImage,ui->threshold->value(),ui->ksize->value());
+    Harris::harrisCornerDetector(grayImg,outputImage,ui->threshold->value(),ui->ksize->value(),operator_type);
     QImage qoutputImage(outputImage.data, outputImage.cols, outputImage.rows, QImage::Format_BGR888);
     QPixmap image  = QPixmap::fromImage(qoutputImage);
     int w = ui->output_label->width();
@@ -69,5 +69,11 @@ void Page6::on_ksize_valueChanged(int arg1)
         ui->ksize->setValue(val-1);
     updateOutput();
 
+}
+
+
+void Page6::on_comboBox_currentIndexChanged(int index)
+{
+    operator_type = index==0;
 }
 

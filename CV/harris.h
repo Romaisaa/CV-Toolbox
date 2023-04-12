@@ -8,7 +8,7 @@
 class Harris
 {
 public:
-    static void harrisCornerDetector(const cv::Mat& inputImage, cv::Mat& outputImage, double threshold, int windowSize);
+    static void harrisCornerDetector(const cv::Mat& inputImage, cv::Mat& outputImage, double threshold, int windowSize,bool isLambda);
 private:
     static void plotCorners(const cv::Mat& input, cv::Mat& output, cv::Mat& harrisResponse, int threshold);
     static void convolution(const cv::Mat& src, cv::Mat& dst, const cv::Mat& kernel);
