@@ -31,6 +31,8 @@ void Page6::on_input_label_clicked()
 
 void Page6::updateOutput(){
     if (!img_filename.isEmpty()) {
+        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
     cv::Mat outputImage;
     Harris::harrisCornerDetector(grayImg,outputImage,ui->threshold->value(),ui->ksize->value(),operator_type);
     QImage qoutputImage(outputImage.data, outputImage.cols, outputImage.rows, QImage::Format_BGR888);
@@ -39,6 +41,10 @@ void Page6::updateOutput(){
     int h = ui->output_label->height();
     ui->output_label->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
     ui->output_label->setScaledContents(true);
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::string time="Time Elapsed:  "+std::to_string(std::chrono::duration_cast<std::chrono::microseconds> (end - begin).count()) + "  µs" ;
+
+    ui->time_label->setText( QString::fromStdString(time));
     }
 }
 
@@ -75,5 +81,6 @@ void Page6::on_ksize_valueChanged(int arg1)
 void Page6::on_comboBox_currentIndexChanged(int index)
 {
     operator_type = index==0;
+    updateOutput();
 }
 

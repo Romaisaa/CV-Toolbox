@@ -64,7 +64,9 @@ void page7::on_image2_clicked()
 
 void page7::on_pushButton_clicked()
 {
+
     if(fileName1.isEmpty() || fileName2.isEmpty()) return ;
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
     cv::Rect roi;
 
@@ -81,5 +83,9 @@ void page7::on_pushButton_clicked()
     cv::Mat outImg = img1.clone();
     cv::rectangle(outImg, roi, cv::Scalar(0, 255, 0), 2);
     uploadImg(outImg);
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::string time="Time Elapsed:  "+std::to_string(std::chrono::duration_cast<std::chrono::microseconds> (end - begin).count()) + "  µs" ;
+
+    ui->time_label->setText( QString::fromStdString(time));
 }
 

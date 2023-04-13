@@ -64,17 +64,38 @@ void page8::uploadImg(cv::Mat img, QLabel* imgSlot)
 void page8::on_pushButton_clicked()
 {
     if (fileName2.isEmpty()) return;
+
+std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
     cv::Mat keypoints_img;
+    std::vector<std::vector<cv::Mat>> keypoints1;
+    std::vector<std::vector<cv::Mat>>scale_space1;
     Sift::sift_keypoints(img1, keypoints_img, keypoints1, scale_space1,ui->sigmaSpin->value(), ui->ContrastSpin->value(), ui->EdgeSpin->value(), ui->KSpin->value());
     uploadImg(keypoints_img, ui->image1);
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::string time="Time Elapsed:  "+to_string(std::chrono::duration_cast<std::chrono::microseconds> (end - begin).count()) + "  µs" ;
+
+    ui->time_label->setText( QString::fromStdString(time));
+
 }
 
 void page8::on_pushButton_2_clicked()
 {
-    Sift::SIFT_descriptors(descriptors1, scale_space1, keypoints1, ui->MagSpin->value(), ui->sigmaSpin->value(), ui->KSpin->value());
-    cv::Mat keypoints_img;
 
-    Sift::sift_keypoints(img2, keypoints_img, keypoints2, scale_space2,ui->sigmaSpin->value(), ui->ContrastSpin->value(), ui->EdgeSpin->value(), ui->KSpin->value());
+    std::vector<std::vector<cv::Mat>> keypoints1;
+    std::vector<std::vector<cv::Mat>>scale_space1;
+    std::vector<std::vector<float>> descriptors1;
+    std::vector<std::vector<cv::Mat>> keypoints2;
+    std::vector<std::vector<cv::Mat>>scale_space2;
+    std::vector<std::vector<float>> descriptors2;
+       cv::Mat keypoints_img1;
+       std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
+    Sift::sift_keypoints(img1, keypoints_img1, keypoints1, scale_space1,ui->sigmaSpin->value(), ui->ContrastSpin->value(), ui->EdgeSpin->value(), ui->KSpin->value());
+    Sift::SIFT_descriptors(descriptors1, scale_space1, keypoints1, ui->MagSpin->value(), ui->sigmaSpin->value(), ui->KSpin->value());
+
+   cv::Mat keypoints_img2;
+    Sift::sift_keypoints(img2, keypoints_img2, keypoints2, scale_space2,ui->sigmaSpin->value(), ui->ContrastSpin->value(), ui->EdgeSpin->value(), ui->KSpin->value());
     Sift::SIFT_descriptors(descriptors2, scale_space2, keypoints2, ui->MagSpin->value(), ui->sigmaSpin->value(), ui->KSpin->value());
 
     cv::Mat des1 = vectorToMat(descriptors1);
@@ -85,10 +106,29 @@ void page8::on_pushButton_2_clicked()
     cv::Mat output;
     cv::hconcat(img1, img2, output);
 
-    for(int i = 0; i < matches.size(); i++){
+    vector<cv::Point> keys1;
+    Sift::extract_keypoints(keys1,keypoints1);
 
+    vector<cv::Point> keys2;
+    Sift::extract_keypoints(keys2,keypoints2);
+    for(int i = 1; i < matches.size(); i++){
+        if(matches[i][2]>0.2){
+        cv::Point point1 =keys1[matches[i][0]];
+        cv::Point point2 =keys2[matches[i][1]];
+        if(point1.x==0 && point1.y==0) continue;
+        if(point2.x==0 && point2.y==0) continue;
+        point2.x+=img1.size().width ;
+        cv::circle(output,point1,5,cv::Scalar(0,0,255),1);
+        cv::circle(output,point2,5,cv::Scalar(0,0,255),1);
+        cv::line(output,point1,point2,cv::Scalar(255,0,0),1);
+        }
 
     }
+    uploadImg(output,ui->image3);
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::string time="Time Elapsed:  "+to_string(std::chrono::duration_cast<std::chrono::microseconds> (end - begin).count()) + "  µs" ;
+
+    ui->time_label->setText( QString::fromStdString(time));
 
 }
 

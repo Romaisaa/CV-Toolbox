@@ -19,7 +19,7 @@ public:
     static void sift_keypoints(Mat& input_img,Mat& keypoints_img, vector<vector<Mat>>&keypoints, vector<vector<Mat>>&scale_space,float sigma, float contrast_threshold, float edge_threshold, float k);
     static void SIFT_descriptors(vector<vector<float>>&descriptors, vector<vector<cv::Mat>> scale_space, vector<vector<cv::Mat>>& keypoints,float magnitude_threshold,float sigma,float k);
 
-
+ static void extract_keypoints(vector<cv::Point>& key_points, vector<vector<Mat>>& keypoints);
 
 private:
     static void char_to_float(cv::Mat& Image1, cv::Mat&Image2);
@@ -49,6 +49,7 @@ private:
     static void get_orientations(vector<vector<Mat>>& scale_space, vector<vector<Mat>> &orientations);
     static void get_magnitudes(vector<vector<Mat>>& scale_space, vector<vector<Mat>>& magnitudes,float sigma,float k);
     static float get_angle(float x, float y);
+
 
 
 };

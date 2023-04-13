@@ -11,6 +11,7 @@
 #include <map>
 #include "CV/sift.h"
 #include "CV/matching.h"
+#include <chrono>
 namespace Ui {
 class page8;
 }
@@ -42,12 +43,12 @@ private:
     QString fileName2;
     void rescaleImg(QLabel* imgSlot, QPixmap& image);
     void uploadImg(cv::Mat img, QLabel* imgSlot);
-    std::vector<std::vector<cv::Mat>> keypoints1;
-    std::vector<std::vector<cv::Mat>>scale_space1;
-    std::vector<std::vector<float>> descriptors1;
-    std::vector<std::vector<cv::Mat>> keypoints2;
-    std::vector<std::vector<cv::Mat>>scale_space2;
-    std::vector<std::vector<float>> descriptors2;
+//    std::vector<std::vector<cv::Mat>> keypoints1;
+//    std::vector<std::vector<cv::Mat>>scale_space1;
+//    std::vector<std::vector<float>> descriptors1;
+//    std::vector<std::vector<cv::Mat>> keypoints2;
+//    std::vector<std::vector<cv::Mat>>scale_space2;
+//    std::vector<std::vector<float>> descriptors2;
     cv::Mat vectorToMat(const vector<vector<float>>& input);
 };
 

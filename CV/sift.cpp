@@ -238,6 +238,21 @@ float Sift::get_angle(float x, float y) {
     return (ang * 180.0) / PI;
 }
 
+void Sift::extract_keypoints(vector<Point> &key_points, vector<vector<Mat> > &keypoints)
+{
+    for (int k = 0;k < 4;k++) {
+            for (int i = 0;i < keypoints[k][0].rows;i++) {
+                for (int j = 0;j < keypoints[k][0].cols;j++) {
+
+                    if (keypoints[k][0].at<float>(i, j) == 1.0 || keypoints[k][1].at<float>(i, j) == 1.0) {
+                        key_points.push_back(Point(((int)pow(2, k)) * j, ((int)pow(2, k)) * i));
+
+                    }
+                }
+            }
+        }
+}
+
 //Get magnitudes of gradients in the scale space
 void Sift:: get_magnitudes(vector<vector<Mat>>& scale_space, vector<vector<Mat>>& magnitudes,float sigma,float k) {
     magnitudes = vector<vector<Mat>>(4, vector<Mat>(5));
@@ -502,24 +517,3 @@ void Sift::SIFT_descriptors(vector<vector<float>>&descriptors, vector<vector<Mat
 
 }
 
-vector<KeyPoint> Sift::extract_keypoints(const vector<vector<Mat>>& descriptors) {
-    vector<KeyPoint> keypoints;
-
-    // iterate over each element in the vector of vectors
-    for (const auto& descriptor : descriptors) {
-        // iterate over each Mat in the current vector
-        for (const auto& mat : descriptor) {
-
-            // convert the Mat to a vector of keypoints
-            vector<KeyPoint> kps;
-            Ptr<Feature2D> detector = ORB::create();
-
-            detector->detect(mat, kps);
-
-            // append the keypoints to the output vector
-            keypoints.insert(keypoints.end(), kps.begin(), kps.end());
-        }
-    }
-
-    return keypoints;
-}

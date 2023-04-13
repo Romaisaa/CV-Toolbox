@@ -14,25 +14,6 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Input 1</string>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="Clickable" name="image1">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="1" column="1">
     <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
@@ -158,7 +139,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QDoubleSpinBox" name="MagSpin"/>
+       <widget class="QDoubleSpinBox" name="MagSpin">
+        <property name="value">
+         <double>0.200000000000000</double>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton">
@@ -171,6 +156,25 @@
        <widget class="QPushButton" name="pushButton_2">
         <property name="text">
          <string>Match</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Input 1</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="Clickable" name="image1">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -194,6 +198,22 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLabel" name="time_label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Time Elapsed:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
     </widget>
    </item>
   </layout>
