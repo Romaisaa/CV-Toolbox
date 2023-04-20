@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->insertWidget(6,new page7());
     ui->stackedWidget->insertWidget(7,new page8());
     ui->stackedWidget->insertWidget(8,new page9());
+    ui->stackedWidget->insertWidget(9,new Page10());
 
     ui->stackedWidget->setCurrentIndex(0);
     connect(ui->pushButton, &QPushButton::clicked, ui->stackedWidget, [=]() {
@@ -64,6 +65,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_9, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(8);
         });
+    connect(ui->pushButton_10, &QPushButton::clicked, ui->stackedWidget, [=]() {
+        ui->stackedWidget->setCurrentIndex(9);
+    });
 
     QPixmap pointPix(":/resources/resources/handpointing.png");
     QPoint hotSpot2(11, 10);
@@ -75,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent)
         Clickable *label = qobject_cast<Clickable*>(widget);
         if (label != nullptr)
         {
-            // Set the new cursor for the QLabel
+            // Set the new curso2r for the QLabel
             label->setCursor(pointerCursor);
             continue;
         }

@@ -14,6 +14,7 @@ SOURCES += \
     CV/filters.cpp \
     CV/frequency.cpp \
     CV/matching.cpp \
+    CV/segmentation.cpp \
     CV/sift.cpp \
     Plot/plotter.cpp \
     CV/hough.cpp \
@@ -31,6 +32,7 @@ SOURCES += \
     pages/page1.cpp \
     pages/page5.cpp \
     pages/page6.cpp\
+    pages/page10.cpp\
     pages/page7.cpp
 
 HEADERS += \
@@ -39,6 +41,7 @@ HEADERS += \
     CV/filters.h \
     CV/frequency.h \
     CV/matching.h \
+    CV/segmentation.h \
     CV/sift.h \
     Plot/plotter.h \
     CV/hough.h \
@@ -55,6 +58,7 @@ HEADERS += \
     pages/page5.h \
     pages/page6.h  \
     pages/page7.h\
+    pages/page10.h\
     utilities/scene.h
 
 FORMS += \
@@ -67,18 +71,18 @@ FORMS += \
     pages/page6.ui\
     pages/page7.ui \
     pages/page8.ui \
+    pages/page10.ui \
     pages/page9.ui
 
 
-INCLUDEPATH += C:\Users\youss\Documents\libraries\opencv\build\include
+INCLUDEPATH += C:\opencv\build\include
 
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_core470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_highgui470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgcodecs470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgproc470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_features2d470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_calib3d470.dll
-
+LIBS += C:\opencv\release\bin\libopencv_core470.dll
+LIBS += C:\opencv\release\bin\libopencv_highgui470.dll
+LIBS += C:\opencv\release\bin\libopencv_imgcodecs470.dll
+LIBS += C:\opencv\release\bin\libopencv_imgproc470.dll
+LIBS += C:\opencv\release\bin\libopencv_features2d470.dll
+LIBS += C:\opencv\release\bin\libopencv_calib3d470.dll
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

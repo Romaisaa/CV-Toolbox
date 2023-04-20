@@ -11,6 +11,7 @@
 #include "pages/page7.h"
 #include "pages/page8.h"
 #include "pages/page9.h"
+#include "pages/page10.h"
 #include "utilities/clickable.h"
 #include <QFile>
 #include <QDir>

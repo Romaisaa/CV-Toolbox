@@ -115,6 +115,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_10">
+       <property name="text">
+        <string>Page 10</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
