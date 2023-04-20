@@ -59,7 +59,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton2">
+      <widget class="QPushButton" name="pushButton_2">
        <property name="text">
         <string>Page 2</string>
        </property>
@@ -104,6 +104,13 @@
       <widget class="QPushButton" name="pushButton_8">
        <property name="text">
         <string>Page 8</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_9">
+       <property name="text">
+        <string>Page 9</string>
        </property>
       </widget>
      </item>

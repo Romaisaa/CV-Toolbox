@@ -222,7 +222,7 @@
   <customwidget>
    <class>Clickable</class>
    <extends>QLabel</extends>
-   <header>utilities\clickable.h</header>
+   <header>utilities/clickable.h</header>
    <slots>
     <signal>clicked()</signal>
    </slots>
