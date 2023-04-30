@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QImage>
 #include <map>
+#include "CV/thresholding.h"
 
 namespace Ui {
 class page9;
@@ -25,6 +26,12 @@ public:
 private slots:
 
     void on_Image_clicked();
+
+    void on_typeCombo_activated(int index);
+
+    void on_horizontalSlider_sliderMoved(int position);
+
+    void on_pieceSpin_valueChanged(int arg1);
 
 private:
     Ui::page9 *ui;

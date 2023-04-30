@@ -89,6 +89,11 @@
           <string>Local Thresholding</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>MultiLevel Thresholding</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item>
@@ -100,7 +105,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>method</string>
+         <string>Method</string>
         </property>
        </widget>
       </item>
@@ -116,11 +121,6 @@
           <string>Ostu Thresholding</string>
          </property>
         </item>
-        <item>
-         <property name="text">
-          <string>Multispectral Thresholding</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
@@ -129,7 +129,7 @@
          <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Preferred</enum>
+         <enum>QSizePolicy::Expanding</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -140,20 +140,69 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QStackedWidget" name="stackedWidget">
+        <property name="currentIndex">
+         <number>1</number>
         </property>
-        <property name="text">
-         <string>Piece Size</string>
-        </property>
+        <widget class="QWidget" name="page_3"/>
+        <widget class="QWidget" name="page">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Piece Size</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="pieceSpin">
+            <property name="minimum">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>20</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string># of Modes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="horizontalSlider">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>6</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksBelow</enum>
+            </property>
+            <property name="tickInterval">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="pieceSpin"/>
       </item>
      </layout>
     </widget>

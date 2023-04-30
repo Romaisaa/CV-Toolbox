@@ -32,8 +32,32 @@ void page9::on_Image_clicked()
 }
 
 void page9::updateOutput(){
-    rescaleImg(ui->Image, image);
-    ui->Image->setPixmap(image);
+    if(fileName.isEmpty()) return;
+    cv::Mat output;
+    if(ui->typeCombo->currentIndex() == 0){
+        rescaleImg(ui->Image, imageGray);
+        ui->Image->setPixmap(imageGray);
+        if(ui->methodCombo->currentIndex() == 0){
+            Thresholding::optimalThresholding(imgGray, output);
+        } else {
+            Thresholding::otsuThresholding(imgGray, output);
+        }
+    }
+    else if(ui->typeCombo->currentIndex() == 1){
+        rescaleImg(ui->Image, imageGray);
+        ui->Image->setPixmap(imageGray);
+        Thresholding::localThreshold(imgGray , output, ui->pieceSpin->value());
+    }
+    else if(ui->typeCombo->currentIndex() == 2){
+        rescaleImg(ui->Image, imageGray);
+        ui->Image->setPixmap(imageGray);
+        Thresholding::multiLevelOtsu(imgGray, output, ui->horizontalSlider->value());
+    }
+    uploadImg(output, ui->Image2);
+
+
+
+
 }
 
 void page9::rescaleImg(QLabel* imgSlot, QPixmap& image)
@@ -48,10 +72,41 @@ void page9::rescaleImg(QLabel* imgSlot, QPixmap& image)
 
 void page9::uploadImg(cv::Mat img, QLabel* imgSlot)
 {
-    QImage qimage2(img.data, img.cols, img.rows,QImage::Format_BGR888);
+    QImage qimage2(img.data, img.cols, img.rows,QImage::Format_Grayscale8);
     QPixmap outputPix = QPixmap::fromImage(qimage2);
 
     rescaleImg(imgSlot, outputPix);
     imgSlot->setPixmap(outputPix);
+}
+
+
+void page9::on_typeCombo_activated(int index)
+{
+    if(index == 0){
+        ui->stackedWidget->setCurrentIndex(0);
+        ui->methodCombo->setVisible(true);
+
+    }else if(index == 1){
+        ui->stackedWidget->setCurrentIndex(1);
+        ui->methodCombo->setVisible(false);
+
+    } else{
+        ui->stackedWidget->setCurrentIndex(2);
+        ui->methodCombo->setVisible(false);
+    }
+    updateOutput();
+
+}
+
+
+void page9::on_horizontalSlider_sliderMoved(int position)
+{
+    updateOutput();
+}
+
+
+void page9::on_pieceSpin_valueChanged(int arg1)
+{
+    updateOutput();
 }
 
