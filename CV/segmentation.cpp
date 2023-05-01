@@ -170,3 +170,276 @@ cv::Vec3b Segmentation:: merge(cv::Vec3b a, cv::Vec3b y) {
     return cv::Vec3b(static_cast<uchar>(r), static_cast<uchar>(g), static_cast<uchar>(b));
 
 }
+
+
+void kMeansDistance(double* distances, int* labels, const cv::Mat& data, const cv::Mat& centers, int N, int K, int dims, bool onlyDistance)
+{
+    for (int i = 0; i < N; ++i)
+    {
+        const float* sample = data.ptr<float>(i);
+        if (onlyDistance)
+        {
+            const float* center = centers.ptr<float>(labels[i]);
+            distances[i] = cv::hal::normL2Sqr_(sample, center, dims);
+            continue;
+        }
+        else
+        {
+            int k_best = 0;
+            double min_dist = DBL_MAX;
+
+            for (int k = 0; k < K; k++)
+            {
+                const float* center = centers.ptr<float>(k);
+                const double dist = cv::hal::normL2Sqr_(sample, center, dims);
+
+                if (min_dist > dist)
+                {
+                    min_dist = dist;
+                    k_best = k;
+                }
+            }
+
+            distances[i] = min_dist;
+            labels[i] = k_best;
+        }
+    }
+}
+
+
+
+static void generateRandomCenter(int dims, const cv::Vec2f* box, float* center, cv::RNG& rng)
+{
+    float margin = 1.f/dims;
+    for (int j = 0; j < dims; j++)
+        center[j] = ((float)rng*(1.f+margin*2.f)-margin)*(box[j][1] - box[j][0]) + box[j][0];
+}
+
+
+
+double Segmentation::generateKClusters(cv::InputArray _data, int K, cv::InputOutputArray _bestLabels,
+                                        cv::TermCriteria criteria, int attempts, cv::OutputArray _centers)
+{
+    cv::Mat data0 = _data.getMat();
+    const bool isrow = data0.rows == 1;
+    const int N = isrow ? data0.cols : data0.rows;
+    const int dims = (isrow ? 1 : data0.cols)*data0.channels();
+    const int type = data0.depth();
+
+    attempts = std::max(attempts, 1);
+
+    cv::Mat data(N, dims, CV_32F, data0.ptr(), isrow ? dims * sizeof(float) : static_cast<size_t>(data0.step));
+
+    _bestLabels.create(N, 1, CV_32S, -1, true);
+
+    cv::Mat _labels, best_labels = _bestLabels.getMat();
+
+    if (!((best_labels.cols == 1 || best_labels.rows == 1) &&
+         best_labels.cols*best_labels.rows == N &&
+         best_labels.type() == CV_32S &&
+         best_labels.isContinuous()))
+    {
+        _bestLabels.create(N, 1, CV_32S);
+        best_labels = _bestLabels.getMat();
+    }
+    _labels.create(best_labels.size(), best_labels.type());
+
+    int* labels = _labels.ptr<int>();
+
+    cv::Mat centers(K, dims, type), old_centers(K, dims, type), temp(1, dims, type);
+    cv::AutoBuffer<int, 64> counters(K);
+    cv::AutoBuffer<double, 64> dists(N);
+    cv::RNG& rng = cv::theRNG();
+
+    if (criteria.type & cv::TermCriteria::EPS)
+        criteria.epsilon = std::max(criteria.epsilon, 0.);
+    else
+        criteria.epsilon = FLT_EPSILON;
+    criteria.epsilon *= criteria.epsilon;
+
+    if (criteria.type & cv::TermCriteria::COUNT)
+        criteria.maxCount = std::min(std::max(criteria.maxCount, 2), 100);
+    else
+        criteria.maxCount = 100;
+
+    if (K == 1)
+    {
+        attempts = 1;
+        criteria.maxCount = 2;
+    }
+
+    cv::AutoBuffer<cv::Vec2f, 64> box(dims);
+
+    double best_compactness = DBL_MAX;
+    for (int a = 0; a < attempts; a++)
+    {
+        double compactness = 0;
+
+        for (int iter = 0; ;)
+        {
+            double max_center_shift = iter == 0 ? DBL_MAX : 0.0;
+
+            swap(centers, old_centers);
+
+            if (iter == 0 && (a > 0))
+            {
+                for (int k = 0; k < K; k++)
+                    generateRandomCenter(dims, box.data(), centers.ptr<float>(k), rng);
+            }
+            else
+            {
+                // compute centers
+                centers = cv::Scalar(0);
+                for (int k = 0; k < K; k++)
+                    counters[k] = 0;
+
+                for (int i = 0; i < N; i++)
+                {
+                    const float* sample = data.ptr<float>(i);
+                    int k = labels[i];
+                    float* center = centers.ptr<float>(k);
+                    for (int j = 0; j < dims; j++)
+                        center[j] += sample[j];
+                    counters[k]++;
+                }
+
+                for (int k = 0; k < K; k++)
+                {
+                    if (counters[k] != 0)
+                        continue;
+
+                    // if some cluster appeared to be empty then:
+                    //   1. find the biggest cluster
+                    //   2. find the farthest from the center point in the biggest cluster
+                    //   3. exclude the farthest point from the biggest cluster and form a new 1-point cluster.
+                    int max_k = 0;
+                    for (int k1 = 1; k1 < K; k1++)
+                    {
+                        if (counters[max_k] < counters[k1])
+                            max_k = k1;
+                    }
+
+                    double max_dist = 0;
+                    int farthest_i = -1;
+                    float* base_center = centers.ptr<float>(max_k);
+                    float* _base_center = temp.ptr<float>(); // normalized
+                    float scale = 1.f/counters[max_k];
+                    for (int j = 0; j < dims; j++)
+                        _base_center[j] = base_center[j]*scale;
+
+                    for (int i = 0; i < N; i++)
+                    {
+                        if (labels[i] != max_k)
+                            continue;
+                        const float* sample = data.ptr<float>(i);
+                        double dist = cv::hal::normL2Sqr_(sample, _base_center, dims);
+
+                        if (max_dist <= dist)
+                        {
+                            max_dist = dist;
+                            farthest_i = i;
+                        }
+                    }
+
+                    counters[max_k]--;
+                    counters[k]++;
+                    labels[farthest_i] = k;
+
+                    const float* sample = data.ptr<float>(farthest_i);
+                    float* cur_center = centers.ptr<float>(k);
+                    for (int j = 0; j < dims; j++)
+                    {
+                        base_center[j] -= sample[j];
+                        cur_center[j] += sample[j];
+                    }
+                }
+
+                for (int k = 0; k < K; k++)
+                {
+                    float* center = centers.ptr<float>(k);
+                    CV_Assert( counters[k] != 0 );
+
+                    float scale = 1.f/counters[k];
+                    for (int j = 0; j < dims; j++)
+                        center[j] *= scale;
+
+                    if (iter > 0)
+                    {
+                        double dist = 0;
+                        const float* old_center = old_centers.ptr<float>(k);
+                        for (int j = 0; j < dims; j++)
+                        {
+                            double t = center[j] - old_center[j];
+                            dist += t*t;
+                        }
+                        max_center_shift = std::max(max_center_shift, dist);
+                    }
+                }
+            }
+
+            bool isLastIter = (++iter == MAX(criteria.maxCount, 2) || max_center_shift <= criteria.epsilon);
+
+            if (isLastIter)
+            {
+                // don't re-assign labels to avoid creation of empty clusters
+                kMeansDistance(dists, labels, data, centers, N, K, dims, true);
+                compactness = sum(cv::Mat(cv::Size(N, 1), CV_64F, &dists[0]))[0];
+                break;
+            }
+            else
+            {
+                // assign labels
+                kMeansDistance(dists, labels, data, centers, N, K, dims, false);
+            }
+        }
+
+        if (compactness < best_compactness)
+        {
+            best_compactness = compactness;
+            if (_centers.needed())
+            {
+                if (_centers.fixedType() && _centers.channels() == dims)
+                    centers.reshape(dims).copyTo(_centers);
+                else
+                    centers.copyTo(_centers);
+            }
+            _labels.copyTo(best_labels);
+        }
+    }
+
+    return best_compactness;
+}
+
+void Segmentation::kmeansSegmentation(cv::Mat inputImage, cv::Mat &outputImage, int K) {
+    cv::Mat samples(inputImage.rows * inputImage.cols, inputImage.channels(), CV_32F);
+    for (int y = 0; y < inputImage.rows; y++)
+        for (int x = 0; x < inputImage.cols; x++)
+            for (int z = 0; z < inputImage.channels(); z++)
+                if (inputImage.channels() == 3) {
+                    samples.at<float>(y + x * inputImage.rows, z) = inputImage.at<cv::Vec3b>(y, x)[z];
+                }
+                else {
+                    samples.at<float>(y + x * inputImage.rows, z) = inputImage.at<uchar>(y, x);
+                }
+
+    cv::Mat labels;
+    int attempts = 5;
+    cv::Mat centers;
+    Segmentation::generateKClusters(samples, K, labels, cv::TermCriteria(cv::TermCriteria::MAX_ITER | cv::TermCriteria::EPS, 10000, 0.0001), attempts, centers);
+
+    cv::Mat new_image(inputImage.size(), inputImage.type());
+    for (int y = 0; y < inputImage.rows; y++)
+        for (int x = 0; x < inputImage.cols; x++)
+        {
+            int cluster_idx = labels.at<int>(y + x * inputImage.rows, 0);
+            if (inputImage.channels()==3) {
+                for (int i = 0; i < inputImage.channels(); i++) {
+                    new_image.at<cv::Vec3b>(y, x)[i] = centers.at<float>(cluster_idx, i);
+                }
+            }
+            else {
+                new_image.at<uchar>(y, x) = centers.at<float>(cluster_idx, 0);
+            }
+        }
+    outputImage = new_image;
+}
