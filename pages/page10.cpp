@@ -35,8 +35,7 @@ void Page10::on_applyBtn_clicked()
 {
      cv::Mat output(img.size(), img.type());
     if(ui->type_comboBox->currentIndex()==0)
-        //TODO:: Kmeans
-         Segmentation::meanShiftSegmentation(img,output,ui->meanColorRaduis->value(),ui->meanSpatialRaduis->value(),ui->meanMaxItr->value());
+        Segmentation::kmeansSegmentation(img, output, ui->kValueInput->value());
     else if (ui->type_comboBox->currentIndex()==1)
         //Mean Shift
          Segmentation::meanShiftSegmentation(img,output,ui->meanColorRaduis->value(),ui->meanSpatialRaduis->value(),ui->meanMaxItr->value());
