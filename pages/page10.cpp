@@ -43,9 +43,14 @@ void Page10::on_applyBtn_clicked()
         //Agglomarative
          Segmentation::agglomarativeSegmentation(img,output,ui->aggClusters->value(),ui->aggThreshold->value(),ui->aggProgressBar);
     else if (ui->type_comboBox->currentIndex()==3)
-        //TODO:: Region Growing
-         Segmentation::meanShiftSegmentation(img,output,ui->meanColorRaduis->value(),ui->meanSpatialRaduis->value(),ui->meanMaxItr->value());
-
+    {
+        // TODO: replace the dummy seeds
+        std::vector<cv::Point> seeds = {
+            cv::Point(100, 100),
+            cv::Point(700, 700)
+        };
+        Segmentation::regionGrowing(img, output, seeds, ui->thersholdValue->value());
+    }
     QImage qimage(output.data, output.cols, output.rows, QImage::Format_BGR888);
     QPixmap Output  = QPixmap::fromImage(qimage);
     int w = ui->output_image_label->width();
