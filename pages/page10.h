@@ -23,6 +23,8 @@ private slots:
 
     void on_applyBtn_clicked();
 
+    void on_type_comboBox_currentIndexChanged(int index);
+
 private:
     Ui::Page10 *ui;
     QPixmap image;
