@@ -16,12 +16,14 @@ class Segmentation
 public:
     static void meanShiftSegmentation(const cv::Mat& inputImage, cv::Mat& outputImage, float colorRaduis, float spatialRadius, int maxIterations);
     static void agglomarativeSegmentation(cv::Mat& input, cv::Mat& segmented_img, int num_clusters, float dist_threshold, QProgressBar* progress_bar);
-    static void kmeansSegmentation(cv::Mat inputImage, cv::Mat &outputImage, int K);
+    static void kmeansSegmentation(cv::Mat inputImage, cv::Mat& outputImage, int K);
+    static void regionGrowing(cv::Mat inputImage, cv::Mat& outputImage, std::vector<cv::Point> seedPoints, int threshold);
 
 private:
     static float distance(cv::Vec3b a, cv::Vec3b b);
     static cv::Vec3b merge(cv::Vec3b a, cv::Vec3b y);
     static void closetClusters(std::vector<cv::Vec3b> clusters, std::vector<cv::Vec3d>& minDistances, std::mutex& myMutex, int start_i, int end_i);
     static double generateKClusters(cv::InputArray _data, int K, cv::InputOutputArray _bestLabels, cv::TermCriteria criteria, int attempts, cv::OutputArray _centers);
+    static void createRegion(cv::Mat input, cv::Mat& output, std::vector<std::vector<cv::Point>> &regions, std::vector<cv::Point> seeds, int threshold);
 };
 #endif // SEGMENTATION_H

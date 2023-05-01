@@ -410,7 +410,7 @@ double Segmentation::generateKClusters(cv::InputArray _data, int K, cv::InputOut
     return best_compactness;
 }
 
-void Segmentation::kmeansSegmentation(cv::Mat inputImage, cv::Mat &outputImage, int K) {
+void Segmentation::kmeansSegmentation(cv::Mat inputImage, cv::Mat& outputImage, int K) {
     cv::Mat samples(inputImage.rows * inputImage.cols, inputImage.channels(), CV_32F);
     for (int y = 0; y < inputImage.rows; y++)
         for (int x = 0; x < inputImage.cols; x++)
@@ -442,4 +442,99 @@ void Segmentation::kmeansSegmentation(cv::Mat inputImage, cv::Mat &outputImage, 
             }
         }
     outputImage = new_image;
+}
+
+
+void Segmentation::createRegion(cv::Mat input, cv::Mat& output,
+                                std::vector<std::vector<cv::Point>> &regions,
+                                std::vector<cv::Point> seeds, int threshold){
+
+    output = cv::Mat::zeros(input.size(), CV_8UC1);
+    int minSize = 50;
+    int maxSize = 10000;
+    cv::Mat taken = cv::Mat::zeros(input.size(), CV_8UC1);
+
+    for (auto seed : seeds) {
+        // Initialize queue for region growing
+        std::queue<cv::Point> queue;
+        queue.push(seed);
+
+        // Initialize visited pixels
+        cv::Mat visited = cv::Mat::zeros(input.size(), CV_8UC1);
+
+        // Initialize region for this seed
+        std::vector<cv::Point> region;
+
+        // Region growing
+        while (!queue.empty())
+        {
+            // Get next pixel from queue
+            cv::Point p = queue.front();
+            queue.pop();
+
+            // Check if pixel has been visited before
+            if (visited.at<uchar>(p.y, p.x) == 1)
+                continue;
+
+            // Mark pixel as visited
+            visited.at<uchar>(p.y, p.x) = 1;
+
+            // Check if pixel is within intensity threshold
+            cv::Vec3b seed_color = input.at<cv::Vec3b>(seed.y, seed.x);
+            cv::Vec3b p_color = input.at<cv::Vec3b>(p.y, p.x);
+            double color_distance = cv::norm(seed_color - p_color);
+            if (color_distance > threshold)
+                continue;
+
+            // Add pixel to region
+            output.at<uchar>(p.y, p.x) = 255;
+            if(taken.at<uchar>(p.y, p.x) == 1)
+                continue;
+            region.push_back(cv::Point(p.y, p.x));
+            taken.at<uchar>(p.y, p.x) = 1;
+
+            // Add neighboring pixels to queue
+            if (p.x > 0)
+                queue.push(cv::Point(p.x - 1, p.y));
+            if (p.x < input.cols - 1)
+                queue.push(cv::Point(p.x + 1, p.y));
+            if (p.y > 0)
+                queue.push(cv::Point(p.x, p.y - 1));
+            if (p.y < input.rows - 1)
+                queue.push(cv::Point(p.x, p.y + 1));
+        }
+
+        // Remove small and large regions
+        std::vector<std::vector<cv::Point>> contours;
+        cv::findContours(output, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
+        for (const auto& contour : contours)
+        {
+            if (contour.size() < minSize || contour.size() > maxSize)
+                continue;
+            for (const auto& point : contour)
+            {
+                if(taken.at<uchar>(point.y, point.x) == 1)
+                    continue;
+                output.at<uchar>(point.y, point.x) = 255;
+                region.push_back(cv::Point(point.y, point.x));
+                taken.at<uchar>(point.y, point.x) = 1;
+            }
+        }
+
+        regions.push_back(region);
+    }
+}
+
+void Segmentation::regionGrowing(cv::Mat inputImage, cv::Mat& outputImage, std::vector<cv::Point> seedPoints, int threshold){
+    std::vector<std::vector<cv::Point>> regions;
+    cv::Mat output;
+
+    Segmentation::createRegion(inputImage, output, regions, seedPoints, threshold);
+    for(auto i = 0; i < regions.size(); i++){
+        std::vector<cv::Point> region = regions[i];
+        for(auto point: region){
+            inputImage.at<cv::Vec3b>(point.x, point.y) = inputImage.at<cv::Vec3b>(seedPoints[i].x, seedPoints[i].y);
+        }
+    }
+    outputImage = inputImage;
 }
