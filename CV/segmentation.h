@@ -25,5 +25,6 @@ private:
     static void closetClusters(std::vector<cv::Vec3b> clusters, std::vector<cv::Vec3d>& minDistances, std::mutex& myMutex, int start_i, int end_i);
     static double generateKClusters(cv::InputArray _data, int K, cv::InputOutputArray _bestLabels, cv::TermCriteria criteria, int attempts, cv::OutputArray _centers);
     static void createRegion(cv::Mat input, cv::Mat& output, std::vector<std::vector<cv::Point>> &regions, std::vector<cv::Point> seeds, int threshold);
+    static void bgr_to_luv(cv::Mat& img_bgr, cv::Mat& output);
 };
 #endif // SEGMENTATION_H

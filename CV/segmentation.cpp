@@ -551,3 +551,72 @@ void Segmentation::regionGrowing(cv::Mat inputImage, cv::Mat& outputImage, std::
     }
     outputImage = inputImage;
 }
+
+void Segmentation::bgr_to_luv(cv::Mat& img_bgr, cv::Mat& output) {
+
+
+    // Split channels
+    std::vector<cv::Mat> bgr;
+    cv::split(img_bgr, bgr);
+
+    const double ref_X = 0.95047;
+    const double ref_Y = 1.0;
+    const double ref_Z = 1.08883;
+
+    // Convert BGR to XYZ
+    cv::Mat XYZ(img_bgr.size(), CV_64FC3);
+    for (int i = 0; i < img_bgr.rows; i++) {
+        for (int j = 0; j < img_bgr.cols; j++) {
+            double B = bgr[0].at<uchar>(i, j) / 255.0;
+            double G = bgr[1].at<uchar>(i, j) / 255.0;
+            double R = bgr[2].at<uchar>(i, j) / 255.0;
+
+            double X = 0.412453 * R + 0.357580 * G + 0.180423 * B;
+            double Y = 0.212671 * R + 0.715160 * G + 0.072169 * B;
+            double Z = 0.019334 * R + 0.119193 * G + 0.950227 * B;
+
+            XYZ.at<cv::Vec3d>(i, j) = cv::Vec3d(X, Y, Z);
+        }
+    }
+
+    // Convert XYZ to LUV
+    cv::Mat img_luv = cv::Mat(img_bgr.size(), CV_64FC3);
+    for (int i = 0; i < XYZ.rows; i++) {
+        for (int j = 0; j < XYZ.cols; j++) {
+            double X = XYZ.at<cv::Vec3d>(i, j)[0];
+            double Y = XYZ.at<cv::Vec3d>(i, j)[1];
+            double Z = XYZ.at<cv::Vec3d>(i, j)[2];
+
+            double var_U = (4 * X) / (X + 15 * Y + 3 * Z);
+            double var_V = (9 * Y) / (X + 15 * Y + 3 * Z);
+
+            double var_Y = Y / ref_Y;
+            if (var_Y > 0.008856) {
+                var_Y = std::pow(var_Y, 1.0 / 3.0);
+            }
+            else {
+                var_Y = (7.787 * var_Y) + (16.0 / 116.0);
+            }
+
+            double ref_U = (4 * ref_X) / (ref_X + 15 * ref_Y + 3 * ref_Z);
+            double ref_V = (9 * ref_Y) / (ref_X + 15 * ref_Y + 3 * ref_Z);
+
+            double L = (116 * var_Y) - 16;
+            double u = 13 * L * (var_U - ref_U);
+            double v = 13 * L * (var_V - ref_V);
+
+            img_luv.at<cv::Vec3d>(i, j) = cv::Vec3d(L  - 16, u, v);
+        }
+    }
+
+    std::vector<cv::Mat> channels;
+    cv::split(img_luv, channels);
+
+
+    channels[0] = channels[0] * (255.0f / 100.0f);
+    channels[1] = (channels[1] + 134) * (255.0f / 354.0f);
+    channels[2] = (channels[2] + 140) * (255.0f / 262.0f);
+    cv::merge(channels, output);
+
+    output.convertTo(output, CV_8UC3);
+}

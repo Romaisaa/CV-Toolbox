@@ -162,7 +162,7 @@ void Thresholding::localThreshold(cv::Mat& img, cv::Mat& output, int pieceSize)
             cv::Rect area(col, row, width, height);
             cv::Mat piece = img(area);
             cv::Mat outputPiece(piece.size(), piece.type());
-            Thresholding::otsuThresholding(piece, outputPiece);
+            Thresholding::multiLevelOtsu(piece, outputPiece, 2);
 
             outputPiece.copyTo(output(area));
 
@@ -199,7 +199,8 @@ void Thresholding::multiLevelOtsu(cv::Mat img, cv::Mat& output, int M)
             }
             if (i == thresholds.size())
                 i--;
-            output.at<char>(row, col) = thresholds[i - 1];
+
+            output.at<uchar>(row, col) = 255 * (((double)i - 1) / (thresholds.size() - 1));
         }
 
 }

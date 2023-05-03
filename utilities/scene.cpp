@@ -44,7 +44,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if(!this->drawFlag){
     QPointF point = event->scenePos();
     this->center= point;
-    this->drawFlag=true;
+   // this->drawFlag=true;
     drawCircle();
     }
 }
