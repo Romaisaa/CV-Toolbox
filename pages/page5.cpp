@@ -33,7 +33,7 @@ void page5::on_upload_btn_clicked()
 {
     Img= QFileDialog::getOpenFileName(this, "Open Image", "", "Image Files (*.png *.jpg *.bmp *.jpeg)");
     QImage image(Img);
-    scene = new Scene();
+    scene = new Scene(false);
     scene->setRad(ui->raduis->value());
     updateImage();
 
@@ -53,7 +53,7 @@ void page5::on_raduis_valueChanged(int arg1)
 {
     scene->setRad(arg1);
     updateImage();
-    scene->drawCircle();
+    scene->drawCircle(false);
 
 }
 
