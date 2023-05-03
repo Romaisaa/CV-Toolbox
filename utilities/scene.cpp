@@ -3,8 +3,9 @@
 Scene::~Scene()
 {
 }
-Scene::Scene()
+Scene::Scene(bool multiPoints)
 {
+    this->multiPoints = multiPoints;
 }
 
 void Scene::setRad(double rad)
@@ -30,22 +31,31 @@ QPointF Scene::getCenter()
 
 
 
-void Scene::drawCircle()
+void Scene::drawCircle(bool isFilled)
 {
-
-    this->addEllipse(this->center.x()-this->rad, this->center.y()-this->rad, this->rad*2.0, this->rad*2.0,
-                     QPen());
-
+    QPen pen;
+    if(isFilled){
+        QBrush brush(Qt::red);
+        this->addEllipse(this->center.x()-this->rad, this->center.y()-this->rad, this->rad*2.0, this->rad*2.0, pen, brush);
+    }else{
+        this->addEllipse(this->center.x()-this->rad, this->center.y()-this->rad, this->rad*2.0, this->rad*2.0, pen);
+    }
+    // This Line for region growing segmentation only
+    this->seeds.push_back(cv::Point(this->center.y(), this->center.x()));
 }
 
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(!this->drawFlag){
-    QPointF point = event->scenePos();
-    this->center= point;
-   // this->drawFlag=true;
-    drawCircle();
+        QPointF point = event->scenePos();
+        this->center= point;
+        if(!this->multiPoints){
+            this->drawFlag=true;
+            drawCircle(false);
+        }else{
+            drawCircle(true);
+        }
     }
 }
 
