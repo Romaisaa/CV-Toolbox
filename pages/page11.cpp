@@ -47,3 +47,87 @@ void page11::on_applyButton_clicked()
 
 }
 
+void readImages(std::string folderPath, cv::Mat& images, std::vector<std::string>& labels) {
+    int row = 0, col = 0;
+
+    for (const auto& entry : fs::directory_iterator(folderPath)) {
+        if (fs::is_regular_file(entry.path())) {
+            row++;
+        }
+        if (row == 1) {
+            cv::Mat img = cv::imread(entry.path().string(), cv::IMREAD_GRAYSCALE);
+            img = img.reshape(1, 1);
+            col = img.size[1];
+        }
+    }
+
+    images = cv::Mat(row, col, CV_8U);
+    int idx = 0;
+    for (const auto& entry : fs::directory_iterator(folderPath)) {
+        if (fs::is_regular_file(entry.path())) {
+            cv::Mat img = cv::imread(entry.path().string(), cv::IMREAD_GRAYSCALE);
+            img = img.reshape(1, 1);
+            cv::Mat row = images.row(idx);
+            img.copyTo(row);
+            idx++;
+
+            std::vector<std::string> splitParts;
+
+            std::istringstream iss(entry.path().filename().string());
+            std::string part;
+
+            while (std::getline(iss, part, '_')) {
+                splitParts.push_back(part);
+            }
+
+            if (!splitParts.empty()) {
+                std::string firstPart = splitParts[0];
+                labels.push_back(firstPart);
+            }
+        }
+    }
+    images.convertTo(images, CV_32F);
+}
+
+void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std::string>& labels) {
+    int row = 0, col = 0;
+
+    for (const auto& entry : fs::directory_iterator(folderPath)) {
+        if (fs::is_regular_file(entry.path())) {
+            row++;
+        }
+        if (row == 1) {
+            cv::Mat img = cv::imread(entry.path().string(), cv::IMREAD_GRAYSCALE);
+            img = img.reshape(1, 1);
+            col = img.size[1];
+        }
+    }
+
+    images = cv::Mat(row, col, CV_8U);
+    int idx = 0;
+    for (const auto& entry : fs::directory_iterator(folderPath)) {
+        if (fs::is_regular_file(entry.path())) {
+            cv::Mat img = cv::imread(entry.path().string(), cv::IMREAD_GRAYSCALE);
+            img = img.reshape(1, 1);
+            cv::Mat row = images.row(idx);
+            img.copyTo(row);
+            idx++;
+
+            std::vector<std::string> splitParts;
+
+            std::istringstream iss(entry.path().filename().string());
+            std::string part;
+
+            while (std::getline(iss, part, '_')) {
+                splitParts.push_back(part);
+            }
+
+            if (!splitParts.empty()) {
+                std::string firstPart = splitParts[0];
+                labels.push_back(firstPart);
+            }
+        }
+    }
+    images.convertTo(images, CV_32F);
+}
+

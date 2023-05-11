@@ -24,6 +24,7 @@ private slots:
     void on_applyButton_clicked();
 
 private:
+    void readImages(std::string folderPath, cv::Mat& images, std::vector<std::string>& labels);
     Ui::page11 *ui;
     QPixmap image;
     cv::Mat img;
