@@ -22,7 +22,7 @@ public:
     int getNearest(cv::Mat images, cv::Mat image);
     cv::Mat eigenValues, eigenVectors, transformedImages, images;
     std::vector<std::string> labels;
-    int n_component = 100;
+    int n_component = 1000;
 
 
 

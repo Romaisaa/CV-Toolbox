@@ -31,6 +31,12 @@ private slots:
 
     void on_train_pca_btn_clicked();
 
+    void on_predict_btn_clicked();
+
+    void on_optionsBox_currentIndexChanged(int index);
+
+    void on_n_comp_valueChanged(int arg1);
+
 private:
     void readImages(std::string folderPath, cv::Mat& images, std::vector<std::string>& labels);
     Ui::page11 *ui;
@@ -40,6 +46,7 @@ private:
     QString Img;
     std::string filePath;
     bool fileExist=false;
+    bool trained=false;
     QString folderPath;
      face_recognition *fr;
 };

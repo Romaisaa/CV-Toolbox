@@ -9,6 +9,7 @@ page11::page11(QWidget *parent) :
     ui->setupUi(this);
     ui->train_pca_btn->setEnabled(false);
     ui->predict_btn->setEnabled(false);
+    ui->operation_stack->setCurrentIndex(0);
 }
 
 page11::~page11()
@@ -28,6 +29,9 @@ void page11::on_inputImageLabel_clicked()
         int h = ui->inputImageLabel->height();
         ui->inputImageLabel->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
         ui->inputImageLabel->setScaledContents(true);
+        if(trained)
+            ui->predict_btn->setEnabled(true);
+
     }
 }
 
@@ -105,7 +109,6 @@ void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std
             col = img.size[1];
         }
     }
-    qDebug()<<"108";
     images = cv::Mat(row, col, CV_8U);
     int idx = 0;
     for (const auto& entry : fs::directory_iterator(folderPath)) {
@@ -117,18 +120,19 @@ void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std
             idx++;
 
             std::vector<std::string> splitParts;
+            labels.push_back(entry.path().string());
 
-            std::istringstream iss(entry.path().filename().string());
-            std::string part;
+//            std::istringstream iss(entry.path().filename().string());
+//            std::string part;
 
-            while (std::getline(iss, part, '_')) {
-                splitParts.push_back(part);
-            }
+//            while (std::getline(iss, part, '_')) {
+//                splitParts.push_back(part);
+//            }
 
-            if (!splitParts.empty()) {
-                std::string firstPart = splitParts[0];
-                labels.push_back(firstPart);
-            }
+//            if (!splitParts.empty()) {
+//                std::string firstPart = splitParts[0];
+////                labels.push_back(firstPart);
+//            }
         }
     }
     images.convertTo(images, CV_32F);
@@ -171,7 +175,37 @@ void page11::on_train_pca_btn_clicked()
        fr->train(images,labels);
        fr->saveModel(folderPath.toStdString()+"/model.json");
     }
+    trained=true;
+   if(!fileName.isEmpty())
+        ui->predict_btn->setEnabled(true);
+}
 
-    ui->predict_btn->setEnabled(true);
+
+void page11::on_predict_btn_clicked()
+{
+    if(!fileName.isEmpty()){
+        cv::Mat img_gray=cv::imread(fileName.toStdString(),cv::IMREAD_GRAYSCALE);
+        std::string label=fr->getPerson(img_gray);
+        cv::Mat predictedImg = cv::imread(label,cv::IMREAD_GRAYSCALE);
+        QImage qimage(predictedImg.data, predictedImg.cols, predictedImg.rows, QImage::Format_Grayscale8);
+        QPixmap pred_image  = QPixmap::fromImage(qimage);
+        int w = ui->outputImageLabel->width();
+        int h = ui->outputImageLabel->height();
+        ui->outputImageLabel->setPixmap(pred_image.scaled(w,h,Qt::KeepAspectRatio));
+        ui->outputImageLabel->setScaledContents(true);
+
+    }
+}
+
+
+void page11::on_optionsBox_currentIndexChanged(int index)
+{
+        ui->operation_stack->setCurrentIndex(index);
+}
+
+
+void page11::on_n_comp_valueChanged(int arg1)
+{
+    fr->setNComponent(arg1);
 }
 
