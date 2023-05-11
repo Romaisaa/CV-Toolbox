@@ -6,6 +6,7 @@
         <file>resources/handpointing.png</file>
         <file>resources/textcursor.png</file>
         <file>style/Cstartpage.qss</file>
+        <file>models/haarcascade_frontalface_default.xml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>resources/icons8-upload-32.png</file>

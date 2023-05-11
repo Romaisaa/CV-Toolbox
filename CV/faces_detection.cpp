@@ -7,7 +7,7 @@ void faces_detection::detect_faces(cv::Mat& inputImage, cv::Mat& outputImage, bo
 {
     // Load the cascade classifier
     cv::CascadeClassifier face_cascade;
-    face_cascade.load("C://Users/kamel/OneDrive/Documents/GitKraken/CV-Toolbox/models/haarcascade_frontalface_default.xml");
+    face_cascade.load("D:\\Projects\\CV\\Cv-Toolbox\\models\\haarcascade_frontalface_default.xml");
 
     cv::Mat gray;
     cvtColor(inputImage, gray, cv::COLOR_BGR2GRAY);

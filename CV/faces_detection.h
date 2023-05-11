@@ -4,6 +4,7 @@
 #include <iostream>
 #include <filesystem>
 #include <opencv2/opencv.hpp>
+#include <opencv2/objdetect.hpp>
 
 class faces_detection
 {

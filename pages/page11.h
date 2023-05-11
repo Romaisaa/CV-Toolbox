@@ -20,7 +20,6 @@ public:
 private slots:
     void on_inputImageLabel_clicked();
 
-    void on_outputImageLabel_clicked();
 
     void on_applyButton_clicked();
 

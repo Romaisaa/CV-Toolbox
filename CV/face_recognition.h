@@ -10,9 +10,19 @@ class face_recognition
 {
 public:
     face_recognition();
+    void setModel(std::string filePath, cv::Mat images, std::vector<std::string> labels);
+    void train(cv::Mat images, std::vector<std::string> labels);
+    void setNComponent(int n_component);
+    std::string getPerson(cv::Mat image);
+
    private:
-    void performPCA(cv::Mat& dataPoints, cv::Mat& eigenvalues, cv::Mat& eigenvectors, cv:: Mat& convertedData,int numComponents);
-    void multiplyEigen(cv::Mat& eigenvectors, cv::Mat& image, cv::Mat& result);
+    void performPCA(cv::Mat& dataPoints);
+    void multiplyEigen(cv::Mat& eigenvectors,cv::Mat& images, cv::Mat& result);
+    int getNearest(cv::Mat images, cv::Mat image);
+    cv::Mat eigenValues, eigenVectors, transformedImages, images;
+    std::vector<std::string> labels;
+    int n_component = 100;
+
 
 
 };
