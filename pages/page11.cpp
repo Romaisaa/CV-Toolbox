@@ -1,11 +1,14 @@
 #include "page11.h"
 #include "ui_page11.h"
+#include "CV/face_recognition.h"
 
 page11::page11(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::page11)
 {
     ui->setupUi(this);
+    ui->train_pca_btn->setEnabled(false);
+    ui->predict_btn->setEnabled(false);
 }
 
 page11::~page11()
@@ -93,7 +96,7 @@ void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std
     int row = 0, col = 0;
 
     for (const auto& entry : fs::directory_iterator(folderPath)) {
-        if (fs::is_regular_file(entry.path())) {
+        if  (entry.is_regular_file() && entry.path().extension().string() == ".png") {
             row++;
         }
         if (row == 1) {
@@ -102,12 +105,12 @@ void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std
             col = img.size[1];
         }
     }
-
+    qDebug()<<"108";
     images = cv::Mat(row, col, CV_8U);
     int idx = 0;
     for (const auto& entry : fs::directory_iterator(folderPath)) {
-        if (fs::is_regular_file(entry.path())) {
-            cv::Mat img = cv::imread(entry.path().string(), cv::IMREAD_GRAYSCALE);
+        if  (entry.is_regular_file() && entry.path().extension().string() == ".png") {
+             cv::Mat img = cv::imread(entry.path().string(), cv::IMREAD_GRAYSCALE);
             img = img.reshape(1, 1);
             cv::Mat row = images.row(idx);
             img.copyTo(row);
@@ -129,5 +132,46 @@ void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std
         }
     }
     images.convertTo(images, CV_32F);
+}
+
+
+void page11::on_select_folder_btn_clicked()
+{
+
+    folderPath = QFileDialog::getExistingDirectory(nullptr, "Select Folder", QDir::homePath());
+    if(!folderPath.isEmpty()){
+    for (const auto& entry : fs::directory_iterator(folderPath.toStdString()))
+        {
+            if (entry.is_regular_file() && entry.path().extension().string() == ".json")
+            {
+               filePath=entry.path().string();
+               fileExist=true ;
+               break;
+            }
+        }
+    ui->train_pca_btn->setEnabled(true);
+    ui->path_label->setText(folderPath);
+    }
+
+
+}
+
+
+void page11::on_train_pca_btn_clicked()
+{
+
+    cv::Mat images;
+    std::vector<std::string> labels;
+    readImages(folderPath.toStdString(),images,labels);
+    qDebug()<<"read";
+    fr=new face_recognition();
+    if(fileExist)
+       fr->setModel(filePath,images,labels);
+    else{
+       fr->train(images,labels);
+       fr->saveModel(folderPath.toStdString()+"/model.json");
+    }
+
+    ui->predict_btn->setEnabled(true);
 }
 

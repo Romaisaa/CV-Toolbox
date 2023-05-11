@@ -1,4 +1,12 @@
 #include "face_recognition.h"
+#include <QDebug>
+#include <iostream>
+
+
+face_recognition::face_recognition()
+{
+
+}
 
 void face_recognition::setModel(std::string filePath, cv::Mat images, std::vector<std::string> labels)
 {
@@ -51,10 +59,18 @@ void face_recognition:: performPCA(cv::Mat& dataPoints)
     {
         dataPoints.row(i) = dataPoints.row(i) - mean;
     }
+    qDebug()<< dataPoints.size().height;
+    qDebug()<< dataPoints.size().width;
+
+
+
     cv::Mat covariance;
     cv::mulTransposed(dataPoints, covariance, true);
     covariance = covariance / (dataPoints.rows - 1);
+    qDebug()<<"cov";
+
     cv::eigen(covariance, this->eigenValues, this->eigenVectors);
+    qDebug()<<"eigen";
 
 
 
@@ -82,3 +98,10 @@ int face_recognition::getNearest(cv::Mat images, cv::Mat image) {
     cv::minMaxLoc(distances, &minValue, nullptr, &minLocation, nullptr);
     return minLocation.y;
 }
+void face_recognition:: saveModel(std::string filePath) {
+    cv::FileStorage fs(filePath, cv::FileStorage::WRITE);
+    fs << "eigenValues" << eigenValues;
+    fs << "eigenVectors" << eigenVectors;
+    fs.release();
+}
+

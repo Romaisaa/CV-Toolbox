@@ -14,6 +14,7 @@ public:
     void train(cv::Mat images, std::vector<std::string> labels);
     void setNComponent(int n_component);
     std::string getPerson(cv::Mat image);
+    void saveModel(std::string filePath);
 
    private:
     void performPCA(cv::Mat& dataPoints);
