@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    CV/faces_detection.cpp \
     CV/harris.cpp \
     CV/histogram.cpp \
     CV/filters.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
     pages/page7.cpp
 
 HEADERS += \
+    CV/faces_detection.h \
     CV/harris.h \
     CV/histogram.h \
     CV/filters.h \
@@ -78,14 +80,17 @@ FORMS += \
 
 
 
-INCLUDEPATH += C:\Users\youss\Documents\libraries\opencv\build\include
+INCLUDEPATH += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\build\include
 
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_core470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_highgui470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgcodecs470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgproc470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_features2d470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_calib3d470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_core470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_highgui470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_imgcodecs470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_imgproc470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_features2d470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_calib3d470.dll
+LIBS += C:\Users\kamel\OneDrive\Documents\libraries\opencv\opencv\release\bin\libopencv_objdetect470.dll
+
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
