@@ -12,6 +12,7 @@
 #include "pages/page8.h"
 #include "pages/page9.h"
 #include "pages/page10.h"
+#include "pages/page11.h"
 #include "utilities/clickable.h"
 #include <QFile>
 #include <QDir>
@@ -31,6 +32,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
+private slots:
+    void on_pushButton_11_clicked();
 
 private:
     Ui::MainWindow *ui;

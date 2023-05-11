@@ -21,6 +21,7 @@ SOURCES += \
     Plot/plotter.cpp \
     CV/hough.cpp \
     CV/snake.cpp \
+    pages/page11.cpp \
     pages/page4.cpp \
     pages/page9.cpp \
     utilities/qcustomplot.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     Plot/plotter.h \
     CV/hough.h \
     CV/snake.h \
+    pages/page11.h \
     pages/page4.h \
     pages/page9.h \
     utilities/qcustomplot.h \
@@ -66,6 +68,7 @@ HEADERS += \
     utilities/scene.h
 
 FORMS += \
+    pages/page11.ui \
     pages/page4.ui \
     pages/page3.ui \
     pages/mainwindow.ui \
@@ -98,4 +101,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    models/haarcascade_frontalface_default.xml
 

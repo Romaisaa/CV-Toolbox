@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->insertWidget(7,new page8());
     ui->stackedWidget->insertWidget(8,new page9());
     ui->stackedWidget->insertWidget(9,new Page10());
+    ui->stackedWidget->insertWidget(10,new page11());
 
     ui->stackedWidget->setCurrentIndex(0);
     connect(ui->pushButton, &QPushButton::clicked, ui->stackedWidget, [=]() {
@@ -68,6 +69,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_10, &QPushButton::clicked, ui->stackedWidget, [=]() {
         ui->stackedWidget->setCurrentIndex(9);
     });
+    connect(ui->pushButton_11, &QPushButton::clicked, ui->stackedWidget, [=]() {
+        ui->stackedWidget->setCurrentIndex(10);
+    });
 
     QPixmap pointPix(":/resources/resources/handpointing.png");
     QPoint hotSpot2(11, 10);
@@ -91,5 +95,3 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-

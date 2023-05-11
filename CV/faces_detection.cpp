@@ -1,10 +1,13 @@
 #include "faces_detection.h"
+#include <QDir>
+#include <QDebug>
+#include <QCoreApplication>
 
 void faces_detection::detect_faces(cv::Mat& inputImage, cv::Mat& outputImage, bool isCropped)
 {
     // Load the cascade classifier
     cv::CascadeClassifier face_cascade;
-    face_cascade.load("../models/haarcascade_frontalface_default.xml");
+    face_cascade.load("C://Users/kamel/OneDrive/Documents/GitKraken/CV-Toolbox/models/haarcascade_frontalface_default.xml");
 
     cv::Mat gray;
     cvtColor(inputImage, gray, cv::COLOR_BGR2GRAY);
@@ -27,7 +30,7 @@ void faces_detection::detect_faces(cv::Mat& inputImage, cv::Mat& outputImage, bo
 }
 
 
-void cropFaceImage(cv::Mat inputImage, cv::Mat& outputImage, cv::Rect faceRect) {
+void faces_detection::cropImage(cv::Mat inputImage, cv::Mat& outputImage, cv::Rect faceRect) {
     int targetWidth = 109;
     int targetHeight = 109;
 

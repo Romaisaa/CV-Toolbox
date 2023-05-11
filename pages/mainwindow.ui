@@ -34,7 +34,7 @@
      <x>0</x>
      <y>0</y>
      <width>951</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -118,6 +118,13 @@
       <widget class="QPushButton" name="pushButton_10">
        <property name="text">
         <string>Page 10</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_11">
+       <property name="text">
+        <string>Page 11</string>
        </property>
       </widget>
      </item>
