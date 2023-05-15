@@ -20,25 +20,25 @@ SOURCES += \
     CV/segmentation.cpp \
     CV/sift.cpp \
     CV/thresholding.cpp \
-#    Plot/plotter.cpp \
+    Plot/plotter.cpp \
     CV/hough.cpp \
     CV/snake.cpp \
-    pages/page11.cpp \
-    pages/page4.cpp \
-    pages/page9.cpp \
-#    utilities/qcustomplot.cpp \
-    pages/page8.cpp \
+    pages/SIFT_page.cpp \
+    pages/contour_page.cpp \
+    pages/face_page.cpp \
+    pages/filters_page.cpp \
+    pages/frequency_page.cpp \
+    pages/harris_page.cpp \
+    pages/histogram_page.cpp \
+    pages/hough_page.cpp \
+    pages/matching_page.cpp \
+    utilities/qcustomplot.cpp \
+    pages/segmenation_page.cpp \
+    pages/thresholding_page.cpp \
     utilities/clickable.cpp \
     utilities/scene.cpp \
     main.cpp \
-    pages/page3.cpp \
-    pages/mainwindow.cpp \
-#    pages/page2.cpp \
-    pages/page1.cpp \
-    pages/page5.cpp \
-    pages/page6.cpp\
-    pages/page10.cpp\
-    pages/page7.cpp
+    pages/mainwindow.cpp
 
 HEADERS += \
     CV/face_recognition.h \
@@ -52,38 +52,38 @@ HEADERS += \
     CV/segmentation.h \
     CV/sift.h \
     CV/thresholding.h \
-#    Plot/plotter.h \
+    Plot/plotter.h \
     CV/hough.h \
     CV/snake.h \
-    pages/page11.h \
-    pages/page4.h \
-    pages/page9.h \
-#    utilities/qcustomplot.h \
-    pages/page8.h \
+    pages/SIFT_page.h \
+    pages/contour_page.h \
+    pages/face_page.h \
+    pages/filters_page.h \
+    pages/frequency_page.h \
+    pages/harris_page.h \
+    pages/histogram_page.h \
+    pages/hough_page.h \
+    pages/matching_page.h \
+    utilities/qcustomplot.h \
+    pages/segmenation_page.h \
+    pages/thresholding_page.h \
     utilities/clickable.h \
-    pages/page3.h \
     pages/mainwindow.h \
-#    pages/page2.h \
-    pages/page1.h \
-    pages/page5.h \
-    pages/page6.h  \
-    pages/page7.h\
-    pages/page10.h\
     utilities/scene.h
 
 FORMS += \
-    pages/page11.ui \
-    pages/page4.ui \
-    pages/page3.ui \
+    pages/SIFT_page.ui \
+    pages/contour_page.ui \
+    pages/face_page.ui \
+    pages/filters_page.ui \
+    pages/frequency_page.ui \
+    pages/harris_page.ui \
+    pages/histogram_page.ui \
+    pages/hough_page.ui \
+    pages/matching_page.ui \
     pages/mainwindow.ui \
-#    pages/page2.ui \
-    pages/page1.ui \
-    pages/page5.ui \
-    pages/page6.ui\
-    pages/page7.ui \
-    pages/page8.ui \
-    pages/page10.ui \
-    pages/page9.ui
+    pages/segmenation_page.ui \
+    pages/thresholding_page.ui
 
 
 

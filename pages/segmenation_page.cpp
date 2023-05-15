@@ -1,4 +1,4 @@
-#include "page10.h"
+#include "segmenation_page.h"
 #include "ui_page10.h"
 
 Page10::Page10(QWidget *parent) :

@@ -1,5 +1,5 @@
-#ifndef PAGE7_H
-#define PAGE7_H
+#ifndef MATCHING_PAGE_H
+#define MATCHING_PAGE_H
 
 #include <QWidget>
 #include <QFileDialog>
@@ -41,4 +41,4 @@ private:
     void uploadImg(cv::Mat img);
 };
 
-#endif // PAGE7_H
+#endif // MATCHING_PAGE_H

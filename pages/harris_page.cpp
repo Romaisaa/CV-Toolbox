@@ -1,4 +1,4 @@
-#include "pages/page6.h"
+#include "pages/harris_page.h"
 #include "ui_page6.h"
 
 Page6::Page6(QWidget *parent) :

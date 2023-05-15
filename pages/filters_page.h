@@ -1,5 +1,5 @@
-#ifndef PAGE1_H
-#define PAGE1_H
+#ifndef FILTERS_PAGE_H
+#define FILTERS_PAGE_H
 
 #include <QWidget>
 #include <QFileDialog>
@@ -66,4 +66,4 @@ private:
 
 };
 
-#endif // PAGE1_H
+#endif // FILTERS_PAGE_H

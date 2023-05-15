@@ -1,5 +1,5 @@
-#ifndef PAGE9_H
-#define PAGE9_H
+#ifndef THRESHOLDING_PAGE_H
+#define THRESHOLDING_PAGE_H
 
 #include <QWidget>
 #include <QFileDialog>
@@ -45,4 +45,4 @@ private:
     void updateOutput();
 };
 
-#endif // PAGE9_H
+#endif // THRESHOLDING_PAGE_H

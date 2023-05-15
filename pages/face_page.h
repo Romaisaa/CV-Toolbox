@@ -1,5 +1,5 @@
-#ifndef PAGE11_H
-#define PAGE11_H
+#ifndef FACE_PAGE_H
+#define FACE_PAGE_H
 
 #include <QWidget>
 #include <QFileDialog>
@@ -51,4 +51,4 @@ private:
      face_recognition *fr;
 };
 
-#endif // PAGE11_H
+#endif // FACE_PAGE_H

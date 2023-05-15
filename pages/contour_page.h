@@ -1,5 +1,5 @@
-#ifndef PAGE5_H
-#define PAGE5_H
+#ifndef CONTOUR_PAGE_H
+#define CONTOUR_PAGE_H
 
 #include <QWidget>
 #include "utilities/scene.h"
@@ -42,4 +42,4 @@ private:
 
 };
 
-#endif // PAGE5_H
+#endif // CONTOUR_PAGE_H

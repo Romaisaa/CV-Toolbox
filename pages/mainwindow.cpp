@@ -42,9 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(0);
         });
-//    connect(ui->pushButton_2, &QPushButton::clicked, ui->stackedWidget, [=]() {
-//            ui->stackedWidget->setCurrentIndex(1);
-//        });
+    connect(ui->pushButton_2, &QPushButton::clicked, ui->stackedWidget, [=]() {
+            ui->stackedWidget->setCurrentIndex(1);
+        });
     connect(ui->pushButton_3, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(2);
         });

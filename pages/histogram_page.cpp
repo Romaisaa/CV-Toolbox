@@ -1,4 +1,4 @@
-#include "page2.h"
+#include "histogram_page.h"
 #include "ui_page2.h"
 
 page2::page2(QWidget *parent) :
