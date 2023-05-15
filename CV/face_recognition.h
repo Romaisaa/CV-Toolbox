@@ -4,6 +4,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc.hpp>
 #include<opencv2/imgproc/types_c.h>
+#include "CV/logisticregression.h"
 
 
 class face_recognition
@@ -15,6 +16,8 @@ public:
     void setNComponent(int n_component);
     std::string getPerson(cv::Mat image);
     void saveModel(std::string filePath);
+    void trainImages(cv::Mat images, std::vector<std::string> labels, std::vector<LogisticRegression>& models);
+    void testImages(cv::Mat images, std::vector<LogisticRegression> models, std::vector<cv::Mat>& predictions);
 
    private:
     void performPCA(cv::Mat& dataPoints);

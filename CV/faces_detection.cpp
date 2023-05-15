@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QCoreApplication>
 
+
 void faces_detection::detect_faces(cv::Mat& inputImage, cv::Mat& outputImage, bool isCropped)
 {
     // Load the cascade classifier
@@ -87,5 +88,6 @@ void faces_detection::cropImage(cv::Mat inputImage, cv::Mat& outputImage, cv::Re
 
     outputImage = croppedImage.clone();
 }
+
 
 

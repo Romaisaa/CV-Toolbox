@@ -105,3 +105,42 @@ void face_recognition:: saveModel(std::string filePath) {
     fs.release();
 }
 
+void face_recognition::trainImages(cv::Mat images, std::vector<std::string> labels, std::vector<LogisticRegression>& models) {
+
+    std::unordered_map<std::string, int> mapper;
+    cv::Mat y(images.rows, 1, images.type());
+
+    int labeller = 0;
+    for (int i = 0; i < labels.size(); i++) {
+        if (mapper.count(labels[i]) == 0) {
+            mapper[labels[i]] = labeller;
+            labeller++;
+        }
+        y.at<float>(i) = mapper[labels[i]];
+    }
+
+    for (int i = 0; i < labeller; i++) {
+        cv::Mat temp_y = y.clone();
+        for (int j = 0; j < temp_y.rows; j++) {
+            if (temp_y.at<float>(j) == i)
+                temp_y.at<float>(j) = 1;
+            else
+                temp_y.at<float>(j) = 0;
+        }
+        std::cout << temp_y << std::endl;
+        cv::Mat temp_X = images.clone();
+        models.push_back(LogisticRegression(0.01, 200));
+        models[i].fit(temp_X, temp_y);
+
+    }
+
+}
+
+void face_recognition::testImages(cv::Mat images, std::vector<LogisticRegression> models, std::vector<cv::Mat>& predictions) {
+
+    for (int i = 0; i < models.size(); i++) {
+        cv::Mat y_pred = models[i].predict(images);
+        predictions.push_back(y_pred);
+    }
+}
+
