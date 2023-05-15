@@ -34,15 +34,21 @@
      <x>0</x>
      <y>0</y>
      <width>951</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget_2">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="minimumSize">
     <size>
-     <width>123</width>
+     <width>229</width>
      <height>562</height>
     </size>
    </property>
@@ -54,77 +60,77 @@
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Page 1</string>
+        <string> Filters, Noise. Edge Detectors</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
-        <string>Page 2</string>
+        <string>Noramlization, Equalization</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_3">
        <property name="text">
-        <string>Page 3</string>
+        <string>Frequency Filters, Hybird</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_4">
        <property name="text">
-        <string>Page 4</string>
+        <string>Hough Transform</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_5">
        <property name="text">
-        <string>Page 5</string>
+        <string>Active Contour</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_6">
        <property name="text">
-        <string>Page 6</string>
+        <string>Harris and Lamda-</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_7">
        <property name="text">
-        <string>Page 7</string>
+        <string>Image Matching</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_8">
        <property name="text">
-        <string>Page 8</string>
+        <string>SIFT Keypoints &amp; Matching</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_9">
        <property name="text">
-        <string>Page 9</string>
+        <string>Thresholding</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_10">
        <property name="text">
-        <string>Page 10</string>
+        <string>Segmentation</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_11">
        <property name="text">
-        <string>Page 11</string>
+        <string>Face Recognition</string>
        </property>
       </widget>
      </item>

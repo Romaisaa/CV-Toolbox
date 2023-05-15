@@ -16,7 +16,6 @@ SOURCES += \
     CV/filters.cpp \
     CV/frequency.cpp \
     CV/logisticregression.cpp \
-    CV/logisticregression.cpp \
     CV/matching.cpp \
     CV/segmentation.cpp \
     CV/sift.cpp \
@@ -48,7 +47,6 @@ HEADERS += \
     CV/histogram.h \
     CV/filters.h \
     CV/frequency.h \
-    CV/logisticregression.h \
     CV/logisticregression.h \
     CV/matching.h \
     CV/segmentation.h \
@@ -89,15 +87,15 @@ FORMS += \
 
 
 
-INCLUDEPATH += C:\Users\youss\Documents\libraries\opencv\build\include
+INCLUDEPATH += C:\opencv\build\include
 
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_core470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_highgui470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgcodecs470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgproc470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_features2d470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_calib3d470.dll
-LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_objdetect470.dll
+LIBS += C:\opencv\release\bin\libopencv_core470.dll
+LIBS += C:\opencv\release\bin\libopencv_highgui470.dll
+LIBS += C:\opencv\release\bin\libopencv_imgcodecs470.dll
+LIBS += C:\opencv\release\bin\libopencv_imgproc470.dll
+LIBS += C:\opencv\release\bin\libopencv_features2d470.dll
+LIBS += C:\opencv\release\bin\libopencv_calib3d470.dll
+LIBS += C:\opencv\release\bin\libopencv_objdetect470.dll
 
 
 # Default rules for deployment.
