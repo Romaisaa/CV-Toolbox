@@ -1,5 +1,6 @@
 #include "page11.h"
 #include "ui_page11.h"
+#include <Plot/plotter.h>
 #include "CV/face_recognition.h"
 
 page11::page11(QWidget *parent) :
@@ -195,7 +196,7 @@ void page11::on_comboBox_currentIndexChanged(int index)
 
 void page11::on_testUploadBtn_clicked()
 {
-      QString testFolderPath = QFileDialog::getExistingDirectory(nullptr, "Select Folder", QDir::homePath());
+      testFolderPath = QFileDialog::getExistingDirectory(nullptr, "Select Folder", QDir::homePath());
       cv::Mat testImages;
       if(!testFolderPath.isEmpty())
       {
@@ -212,7 +213,10 @@ void page11::on_testUploadBtn_clicked()
 
 void page11::on_comboBox_2_currentIndexChanged(int index)
 {
-   //plotter::plotROC(ui->widget,ROC[index]);
+    if(!testFolderPath.isEmpty()){
+        plotter::plotROC(ui->widget,ROC[index]);
+
+    }
 // fr->personToLabelmapper
 }
 

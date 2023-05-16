@@ -35,19 +35,20 @@ void plotter::plotROC(QCustomPlot* graph,std::pair<std::vector<float>,std::vecto
     }
 
     QVector<double> TPRs;
-    for (const auto& value : ROC.first) {
+    for (const auto& value : ROC.second) {
         TPRs.append(value);
     }
 
     graph->clearPlottables();
 
-//    QCPGraph *plot = new QCPGraph(graph->xAxis, graph->yAxis);
-//    QPen pen(Qt::blue);
-//    plot->setPen(pen);
-//    graph->addGraph();
-//    plot->setData(TPRs,FPRs);
+    QCPGraph *plot = new QCPGraph(graph->xAxis, graph->yAxis);
+    QPen pen(Qt::blue);
+    plot->setPen(pen);
+    graph->addGraph();
+    plot->setData(FPRs,TPRs);
 
-//    // rescale the axes to fit the data
-//    graph->rescaleAxes();
-//    graph->replot();
+    graph->yAxis->setRange(0,1.5);
+    graph->xAxis->setRange(0,1.5);
+
+    graph->replot();
 }

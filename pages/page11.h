@@ -52,6 +52,7 @@ private:
     QString fileName;
     QString Img;
     std::string filePath;
+     QString testFolderPath ;
     bool fileExist=false;
     bool trained=false;
     QString folderPath;

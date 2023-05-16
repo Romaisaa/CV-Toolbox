@@ -136,7 +136,7 @@ std::string face_recognition::predictPerson(cv::Mat image){
 
 void face_recognition::generateModelConfusion( cv::Mat predictions, std::vector<std::string> truePersons,float threshold, int ModelLabel,float& FPR,float& TPR){
     std::vector<float> trueLabels;
-    int TpCounter = 0,TnCounter=0,FnCounter=0,FpCounter=0;
+    float TpCounter = 0,TnCounter=0,FnCounter=0,FpCounter=0;
     for (int i = 0; i < truePersons.size(); i++) {
             trueLabels.push_back( personToLabelmapper[truePersons[i]]);
     }
@@ -164,7 +164,7 @@ void face_recognition::generateROC(std::vector <cv::Mat> predictions, std::vecto
     float FPR,TPR;
     for(int i=0; i<predictions.size(); i++){
         std::vector<float>FPRs,TPRs;
-        for(float threshold=0; threshold<=1;threshold+=0.01){
+        for(float threshold=0; threshold<=1;threshold+=0.005){
             generateModelConfusion( predictions[i], truePersons, threshold, i,FPR,TPR);
             FPRs.push_back(FPR);
             TPRs.push_back(TPR);
