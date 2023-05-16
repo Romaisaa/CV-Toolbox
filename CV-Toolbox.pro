@@ -86,16 +86,15 @@ FORMS += \
     pages/thresholding_page.ui
 
 
+INCLUDEPATH += C:\Users\youss\Documents\libraries\opencv\build\include
 
-INCLUDEPATH += C:\opencv\build\include
-
-LIBS += C:\opencv\release\bin\libopencv_core470.dll
-LIBS += C:\opencv\release\bin\libopencv_highgui470.dll
-LIBS += C:\opencv\release\bin\libopencv_imgcodecs470.dll
-LIBS += C:\opencv\release\bin\libopencv_imgproc470.dll
-LIBS += C:\opencv\release\bin\libopencv_features2d470.dll
-LIBS += C:\opencv\release\bin\libopencv_calib3d470.dll
-LIBS += C:\opencv\release\bin\libopencv_objdetect470.dll
+LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_core470.dll
+LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_highgui470.dll
+LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgcodecs470.dll
+LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_imgproc470.dll
+LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_features2d470.dll
+LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_calib3d470.dll
+LIBS += C:\Users\youss\Documents\libraries\opencv\release\bin\libopencv_objdetect470.dll
 
 
 # Default rules for deployment.

@@ -105,7 +105,9 @@ void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std
         {
             comboItems.push_front(QString::fromStdString(it->first));
         }
+        comboItems.sort();
         ui->comboBox_2->addItems(comboItems);
+        ui->comboBox_2->addItem("All");
 
     }
     images.convertTo(images, CV_32F);
@@ -213,9 +215,24 @@ void page11::on_testUploadBtn_clicked()
 
 void page11::on_comboBox_2_currentIndexChanged(int index)
 {
-    if(!testFolderPath.isEmpty()){
-        plotter::plotROC(ui->widget,ROC[index]);
+    if(!testFolderPath.isEmpty() ){
+        if(ui->comboBox_2->currentText().toStdString() != "All"){
+        std::pair<std::vector<float>, std::vector<float>> curve = ROC[fr->personToLabelmapper[ui->comboBox_2->currentText().toStdString()]];
+        plotter::plotROC(ui->widget,curve);
 
+        double area = 0.0;
+        int n = curve.first.size();
+
+        for (int i = 1; i < n; ++i) {
+            double base = curve.second[i] - curve.second[i - 1];
+            double height = (curve.first[i] + curve.first[i - 1]) / 2.0;
+            area += base * height;
+        }
+        ui->aucLabel->setText(QString::fromStdString("AUC = " + std::to_string((1 + area)*100 ) + "%"));}
+
+        else {
+            plotter::plotAllROC(ui->widget, ROC, fr->labelToPersonMapper);
+        }
     }
 // fr->personToLabelmapper
 }
