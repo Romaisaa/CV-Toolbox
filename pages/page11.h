@@ -1,5 +1,5 @@
-#ifndef FACE_PAGE_H
-#define FACE_PAGE_H
+#ifndef PAGE11_H
+#define PAGE11_H
 
 #include <QWidget>
 #include <QFileDialog>
@@ -7,6 +7,7 @@
 #include "CV/face_recognition.h"
 #include <iostream>
 #include <filesystem>
+
 
 namespace fs = std::filesystem;
 namespace Ui {
@@ -37,8 +38,14 @@ private slots:
 
     void on_n_comp_valueChanged(int arg1);
 
+    void on_comboBox_currentIndexChanged(int index);
+
+    void on_testUploadBtn_clicked();
+
+    void on_comboBox_2_currentIndexChanged(int index);
+
 private:
-    void readImages(std::string folderPath, cv::Mat& images, std::vector<std::string>& labels);
+    void readImages(std::string folderPath, cv::Mat& images, std::vector<std::string>& labels,bool isTest);
     Ui::page11 *ui;
     QPixmap image;
     cv::Mat img;
@@ -48,7 +55,13 @@ private:
     bool fileExist=false;
     bool trained=false;
     QString folderPath;
-     face_recognition *fr;
+    face_recognition *fr;
+    std::unordered_map<std::string, std::string> personToPathMapper;
+    std::vector<cv::Mat> predictions;
+    std::vector<std::pair<std::vector<float>,std::vector<float>>>ROC;
+
+
+
 };
 
-#endif // FACE_PAGE_H
+#endif // PAGE11_H

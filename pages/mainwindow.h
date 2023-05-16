@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "pages/frequency_page.h"
-#include "pages/histogram_page.h"
+//#include "pages/histogram_page.h"
 #include "pages/filters_page.h"
 #include "pages/harris_page.h"
 #include "pages/hough_page.h"
@@ -12,7 +12,7 @@
 #include "pages/SIFT_page.h"
 #include "pages/thresholding_page.h"
 #include "pages/segmenation_page.h"
-#include "pages/face_page.h"
+#include "pages/page11.h"
 #include "utilities/clickable.h"
 #include <QFile>
 #include <QDir>

@@ -1,4 +1,4 @@
-#include "face_page.h"
+#include "page11.h"
 #include "ui_page11.h"
 #include "CV/face_recognition.h"
 
@@ -10,6 +10,7 @@ page11::page11(QWidget *parent) :
     ui->train_pca_btn->setEnabled(false);
     ui->predict_btn->setEnabled(false);
     ui->operation_stack->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 page11::~page11()
@@ -54,49 +55,9 @@ void page11::on_applyButton_clicked()
 
 }
 
-void readImages(std::string folderPath, cv::Mat& images, std::vector<std::string>& labels) {
-    int row = 0, col = 0;
 
-    for (const auto& entry : fs::directory_iterator(folderPath)) {
-        if (fs::is_regular_file(entry.path())) {
-            row++;
-        }
-        if (row == 1) {
-            cv::Mat img = cv::imread(entry.path().string(), cv::IMREAD_GRAYSCALE);
-            img = img.reshape(1, 1);
-            col = img.size[1];
-        }
-    }
 
-    images = cv::Mat(row, col, CV_8U);
-    int idx = 0;
-    for (const auto& entry : fs::directory_iterator(folderPath)) {
-        if (fs::is_regular_file(entry.path())) {
-            cv::Mat img = cv::imread(entry.path().string(), cv::IMREAD_GRAYSCALE);
-            img = img.reshape(1, 1);
-            cv::Mat row = images.row(idx);
-            img.copyTo(row);
-            idx++;
-
-            std::vector<std::string> splitParts;
-
-            std::istringstream iss(entry.path().filename().string());
-            std::string part;
-
-            while (std::getline(iss, part, '_')) {
-                splitParts.push_back(part);
-            }
-
-            if (!splitParts.empty()) {
-                std::string firstPart = splitParts[0];
-                labels.push_back(firstPart);
-            }
-        }
-    }
-    images.convertTo(images, CV_32F);
-}
-
-void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std::string>& labels) {
+void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std::string>& labels,bool isTest) {
     int row = 0, col = 0;
 
     for (const auto& entry : fs::directory_iterator(folderPath)) {
@@ -118,22 +79,33 @@ void page11::readImages(std::string folderPath, cv::Mat& images, std::vector<std
             cv::Mat row = images.row(idx);
             img.copyTo(row);
             idx++;
-
             std::vector<std::string> splitParts;
-            labels.push_back(entry.path().string());
+            std::istringstream iss(entry.path().filename().string());
+            std::string part;
 
-//            std::istringstream iss(entry.path().filename().string());
-//            std::string part;
+            while (std::getline(iss, part, '_')) {
+                splitParts.push_back(part);
+            }
 
-//            while (std::getline(iss, part, '_')) {
-//                splitParts.push_back(part);
-//            }
-
-//            if (!splitParts.empty()) {
-//                std::string firstPart = splitParts[0];
-////                labels.push_back(firstPart);
-//            }
+            if (!splitParts.empty()) {
+                std::string firstPart = splitParts[0];
+                if(personToPathMapper.count(firstPart)==0){
+                        personToPathMapper[firstPart]=entry.path().string();
+            }
+               labels.push_back(firstPart);
+            }
         }
+    }
+    if(!isTest){
+        QStringList comboItems;
+        ui->comboBox_2->clear();
+
+        for (auto it = personToPathMapper.begin(); it != personToPathMapper.end(); it++)
+        {
+            comboItems.push_front(QString::fromStdString(it->first));
+        }
+        ui->comboBox_2->addItems(comboItems);
+
     }
     images.convertTo(images, CV_32F);
 }
@@ -166,7 +138,7 @@ void page11::on_train_pca_btn_clicked()
 
     cv::Mat images;
     std::vector<std::string> labels;
-    readImages(folderPath.toStdString(),images,labels);
+    readImages(folderPath.toStdString(),images,labels,false);
     qDebug()<<"read";
     fr=new face_recognition();
     if(fileExist)
@@ -185,7 +157,8 @@ void page11::on_predict_btn_clicked()
 {
     if(!fileName.isEmpty()){
         cv::Mat img_gray=cv::imread(fileName.toStdString(),cv::IMREAD_GRAYSCALE);
-        std::string label=fr->getPerson(img_gray);
+        std::string label=fr->predictPerson(img_gray);
+        label=personToPathMapper[label];
         cv::Mat predictedImg = cv::imread(label,cv::IMREAD_GRAYSCALE);
         QImage qimage(predictedImg.data, predictedImg.cols, predictedImg.rows, QImage::Format_Grayscale8);
         QPixmap pred_image  = QPixmap::fromImage(qimage);
@@ -207,5 +180,39 @@ void page11::on_optionsBox_currentIndexChanged(int index)
 void page11::on_n_comp_valueChanged(int arg1)
 {
     fr->setNComponent(arg1);
+}
+
+
+void page11::on_comboBox_currentIndexChanged(int index)
+{
+    if(index==0 &&trained &&!fileName.isEmpty())
+        ui->predict_btn->setEnabled(false);
+    else
+        ui->predict_btn->setEnabled(true);
+    ui->stackedWidget->setCurrentIndex(index);
+}
+
+
+void page11::on_testUploadBtn_clicked()
+{
+      QString testFolderPath = QFileDialog::getExistingDirectory(nullptr, "Select Folder", QDir::homePath());
+      cv::Mat testImages;
+      if(!testFolderPath.isEmpty())
+      {
+          std::vector<std::string> testLabels;
+          readImages(testFolderPath.toStdString(), testImages,testLabels ,true);
+          fr->testImages(testImages, predictions);
+          fr->generateROC(predictions,testLabels,ROC);
+          ui->comboBox_2->setEnabled(true);
+      }
+
+
+}
+
+
+void page11::on_comboBox_2_currentIndexChanged(int index)
+{
+   //plotter::plotROC(ui->widget,ROC[index]);
+// fr->personToLabelmapper
 }
 

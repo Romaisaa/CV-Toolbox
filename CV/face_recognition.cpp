@@ -16,9 +16,7 @@ void face_recognition::setModel(std::string filePath, cv::Mat images, std::vecto
     fs.release();
     this->labels = labels;
     this->images = images;
-    cv::Mat tempVectors = eigenVectors.rowRange(0, this->n_component);
-    multiplyEigen(tempVectors, images, this->transformedImages);
-
+    fitByNComp();
 }
 
 void face_recognition::train(cv::Mat images, std::vector<std::string> labels)
@@ -26,29 +24,27 @@ void face_recognition::train(cv::Mat images, std::vector<std::string> labels)
     performPCA(images);
     this->labels = labels;
     this->images = images;
-    cv::Mat tempVectors = eigenVectors.rowRange(0, this->n_component);
-    multiplyEigen(tempVectors, images, this->transformedImages);
+    fitByNComp();
 
 }
 
 void face_recognition::setNComponent(int n_component)
 {
     this->n_component = n_component;
+
+}
+void face_recognition::fitByNComp(){
     cv::Mat tempVectors = eigenVectors.rowRange(0, this->n_component);
     multiplyEigen(tempVectors, this->images, this->transformedImages);
+    trainImages(this->transformedImages);
 }
 
-std::string face_recognition::getPerson(cv::Mat image)
-{
+cv::Mat face_recognition::transformImage(cv::Mat image){
 
-    cv::Mat reshapedImage = image.reshape(1, 1);
-    reshapedImage.convertTo(reshapedImage, CV_32F);
     cv::Mat tempEigen = eigenVectors.rowRange(0, n_component);
     cv::Mat output;
-    multiplyEigen(tempEigen, reshapedImage, output);
-    return labels[getNearest(this->transformedImages, output)];
-
-
+    multiplyEigen(tempEigen, image, output);
+    return output;
 }
 
 void face_recognition:: performPCA(cv::Mat& dataPoints)
@@ -59,21 +55,10 @@ void face_recognition:: performPCA(cv::Mat& dataPoints)
     {
         dataPoints.row(i) = dataPoints.row(i) - mean;
     }
-    qDebug()<< dataPoints.size().height;
-    qDebug()<< dataPoints.size().width;
-
-
-
     cv::Mat covariance;
     cv::mulTransposed(dataPoints, covariance, true);
     covariance = covariance / (dataPoints.rows - 1);
-    qDebug()<<"cov";
-
     cv::eigen(covariance, this->eigenValues, this->eigenVectors);
-    qDebug()<<"eigen";
-
-
-
 }
 
 void face_recognition:: multiplyEigen(cv::Mat& eigenvectors, cv::Mat& images, cv::Mat& result)
@@ -82,22 +67,7 @@ void face_recognition:: multiplyEigen(cv::Mat& eigenvectors, cv::Mat& images, cv
     result = images * eigenvectors.t();
 }
 
-int face_recognition::getNearest(cv::Mat images, cv::Mat image) {
-    cv::Mat distances= cv::Mat(images.rows, 1, CV_32F);
 
-    for (int row = 0; row < images.rows; row++) {
-        double distance = 0;
-        for (int col = 0; col < images.cols; col++) {
-            distance += (images.at<float>(row, col) - image.at<float>(col)) * (images.at<float>(row, col) - image.at<float>(col));
-        }
-        distances.at<float>(row) = distance;
-    }
-
-    double minValue;
-    cv::Point minLocation;
-    cv::minMaxLoc(distances, &minValue, nullptr, &minLocation, nullptr);
-    return minLocation.y;
-}
 void face_recognition:: saveModel(std::string filePath) {
     cv::FileStorage fs(filePath, cv::FileStorage::WRITE);
     fs << "eigenValues" << eigenValues;
@@ -105,18 +75,22 @@ void face_recognition:: saveModel(std::string filePath) {
     fs.release();
 }
 
-void face_recognition::trainImages(cv::Mat images, std::vector<std::string> labels, std::vector<LogisticRegression>& models) {
+void face_recognition::trainImages(cv::Mat images) {
 
-    std::unordered_map<std::string, int> mapper;
+
     cv::Mat y(images.rows, 1, images.type());
-
     int labeller = 0;
     for (int i = 0; i < labels.size(); i++) {
-        if (mapper.count(labels[i]) == 0) {
-            mapper[labels[i]] = labeller;
+        if(labelToPersonMapper.count(labeller)==0){
+            labelToPersonMapper[labeller] = labels[i];
+        }
+        if (personToLabelmapper.count(labels[i]) == 0) {
+            personToLabelmapper[labels[i]] = labeller;
+
             labeller++;
         }
-        y.at<float>(i) = mapper[labels[i]];
+
+        y.at<float>(i) = personToLabelmapper[labels[i]];
     }
 
     for (int i = 0; i < labeller; i++) {
@@ -127,20 +101,76 @@ void face_recognition::trainImages(cv::Mat images, std::vector<std::string> labe
             else
                 temp_y.at<float>(j) = 0;
         }
-        std::cout << temp_y << std::endl;
         cv::Mat temp_X = images.clone();
-        models.push_back(LogisticRegression(0.01, 200));
-        models[i].fit(temp_X, temp_y);
+        this->models.push_back(LogisticRegression(0.01, 200));
+        this->models[i].fit(temp_X, temp_y);
 
     }
 
 }
 
-void face_recognition::testImages(cv::Mat images, std::vector<LogisticRegression> models, std::vector<cv::Mat>& predictions) {
-
-    for (int i = 0; i < models.size(); i++) {
-        cv::Mat y_pred = models[i].predict(images);
+void face_recognition::testImages(cv::Mat images, std::vector<cv::Mat>& predictions) {
+    cv::Mat testTransformed=transformImage(images);
+    for (int i = 0; i < this->models.size(); i++) {
+        cv::Mat y_pred = models[i].predict(testTransformed);
         predictions.push_back(y_pred);
     }
+
+}
+std::string face_recognition::predictPerson(cv::Mat image){
+    std::vector<cv::Mat> predictions;
+    cv::Mat reshapedImage = image.reshape(1, 1);
+    reshapedImage.convertTo(reshapedImage, CV_32F);
+    testImages(reshapedImage,predictions);
+    float maxLabel=-1;
+    float maxScore=-1;
+
+    for(size_t i=0;i<predictions.size();i++){
+        if(predictions[i].at<float>(0)>maxScore){
+            maxLabel=i+1;
+            maxScore=predictions[i].at<float>(0);
+        }
+    }
+    return labelToPersonMapper[maxLabel];
 }
 
+void face_recognition::generateModelConfusion( cv::Mat predictions, std::vector<std::string> truePersons,float threshold, int ModelLabel,float& FPR,float& TPR){
+    std::vector<float> trueLabels;
+    int TpCounter = 0,TnCounter=0,FnCounter=0,FpCounter=0;
+    for (int i = 0; i < truePersons.size(); i++) {
+            trueLabels.push_back( personToLabelmapper[truePersons[i]]);
+    }
+    for(int i=0; i<predictions.rows; i++){
+         if(predictions.at<float>(i)>threshold && trueLabels[i]==ModelLabel )
+            TpCounter++;
+
+         if(predictions.at<float>(i)<threshold && trueLabels[i]==ModelLabel )
+            FnCounter++;
+
+         if(predictions.at<float>(i)>threshold && trueLabels[i]!=ModelLabel )
+            FpCounter++;
+
+         if(predictions.at<float>(i)<threshold && trueLabels[i]!=ModelLabel )
+            TnCounter++;
+    }
+
+
+
+    FPR= FpCounter/(TnCounter+FpCounter);
+    TPR =TpCounter/(TpCounter+FnCounter);
+}
+
+void face_recognition::generateROC(std::vector <cv::Mat> predictions, std::vector<std::string> truePersons, std::vector<std::pair<std::vector<float>,std::vector<float>>>&ROC){
+    float FPR,TPR;
+    for(int i=0; i<predictions.size(); i++){
+        std::vector<float>FPRs,TPRs;
+        for(float threshold=0; threshold<=1;threshold+=0.01){
+            generateModelConfusion( predictions[i], truePersons, threshold, i,FPR,TPR);
+            FPRs.push_back(FPR);
+            TPRs.push_back(TPR);
+
+        }
+
+        ROC.push_back({FPRs,TPRs});
+    }
+}

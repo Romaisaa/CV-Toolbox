@@ -25,7 +25,6 @@ SOURCES += \
     CV/snake.cpp \
     pages/SIFT_page.cpp \
     pages/contour_page.cpp \
-    pages/face_page.cpp \
     pages/filters_page.cpp \
     pages/frequency_page.cpp \
     pages/harris_page.cpp \
@@ -33,6 +32,7 @@ SOURCES += \
     pages/hough_page.cpp \
     pages/matching_page.cpp \
     utilities/qcustomplot.cpp \
+    pages/page11.cpp \
     pages/segmenation_page.cpp \
     pages/thresholding_page.cpp \
     utilities/clickable.cpp \
@@ -57,7 +57,6 @@ HEADERS += \
     CV/snake.h \
     pages/SIFT_page.h \
     pages/contour_page.h \
-    pages/face_page.h \
     pages/filters_page.h \
     pages/frequency_page.h \
     pages/harris_page.h \
@@ -65,6 +64,7 @@ HEADERS += \
     pages/hough_page.h \
     pages/matching_page.h \
     utilities/qcustomplot.h \
+    pages/page11.h \
     pages/segmenation_page.h \
     pages/thresholding_page.h \
     utilities/clickable.h \
@@ -74,7 +74,6 @@ HEADERS += \
 FORMS += \
     pages/SIFT_page.ui \
     pages/contour_page.ui \
-    pages/face_page.ui \
     pages/filters_page.ui \
     pages/frequency_page.ui \
     pages/harris_page.ui \
@@ -82,6 +81,7 @@ FORMS += \
     pages/hough_page.ui \
     pages/matching_page.ui \
     pages/mainwindow.ui \
+    pages/page11.ui \
     pages/segmenation_page.ui \
     pages/thresholding_page.ui
 

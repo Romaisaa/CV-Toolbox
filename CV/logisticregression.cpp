@@ -70,7 +70,6 @@ void LogisticRegression::fit(cv::Mat X, cv::Mat y)
 {
     this->X = X.clone();
     this->y = y.clone();
-    int m = X.rows;
     int n = X.cols;
     this->W = cv::Mat::zeros(n, 1, X.type());
     this->b = 0;

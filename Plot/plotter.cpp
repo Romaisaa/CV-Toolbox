@@ -1,7 +1,7 @@
 #include "plotter.h"
 
 
-void plotter::plotHist(QCustomPlot *graph, QVector<double> &data, Qt::GlobalColor color)
+void plotter::plotHist(QCustomPlot* graph, QVector<double> &data, Qt::GlobalColor color)
 {
     graph->clearPlottables();
     QVector<double> ticks(256);
@@ -25,4 +25,29 @@ void plotter::plotHist(QCustomPlot *graph, QVector<double> &data, Qt::GlobalColo
     // rescale the axes to fit the data
     graph->rescaleAxes();
     graph->replot();
+}
+
+void plotter::plotROC(QCustomPlot* graph,std::pair<std::vector<float>,std::vector<float>>ROC)
+{
+    QVector<double> FPRs;
+    for (const auto& value : ROC.first) {
+        FPRs.append(value);
+    }
+
+    QVector<double> TPRs;
+    for (const auto& value : ROC.first) {
+        TPRs.append(value);
+    }
+
+    graph->clearPlottables();
+
+//    QCPGraph *plot = new QCPGraph(graph->xAxis, graph->yAxis);
+//    QPen pen(Qt::blue);
+//    plot->setPen(pen);
+//    graph->addGraph();
+//    plot->setData(TPRs,FPRs);
+
+//    // rescale the axes to fit the data
+//    graph->rescaleAxes();
+//    graph->replot();
 }
