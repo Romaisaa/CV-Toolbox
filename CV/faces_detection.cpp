@@ -10,8 +10,15 @@ void faces_detection::detect_faces(cv::Mat& inputImage, cv::Mat& outputImage, bo
     cv::CascadeClassifier face_cascade;
     face_cascade.load("D:\\Projects\\CV\\Cv-Toolbox\\models\\haarcascade_frontalface_default.xml");
 
+    cv::Mat updatedInputImage;
+    double aspectRatio = (double) inputImage.cols/(double)inputImage.rows;
+    if(inputImage.rows > 250){
+        int desiredHeight = static_cast<int>(250/aspectRatio);
+        cv::resize(inputImage, updatedInputImage, cv::Size(250, desiredHeight));
+    }
+
     cv::Mat gray;
-    cvtColor(inputImage, gray, cv::COLOR_BGR2GRAY);
+    cvtColor(updatedInputImage, gray, cv::COLOR_BGR2GRAY);
 
     // Detect faces in the grayscale image
     std::vector<cv::Rect> faces;
@@ -20,13 +27,13 @@ void faces_detection::detect_faces(cv::Mat& inputImage, cv::Mat& outputImage, bo
     // Draw rectangles around the detected faces
     for (int i = 0; i < faces.size(); i++)
     {
-        rectangle(inputImage, faces[i], cv::Scalar(0, 255, 0), 2);
+        rectangle(updatedInputImage, faces[i], cv::Scalar(0, 255, 0), 2);
     }
 
     if(isCropped){
-        cropImage(inputImage, outputImage, faces[0]);
+        cropImage(updatedInputImage, outputImage, faces[0]);
     }else{
-        outputImage = inputImage;
+        outputImage = updatedInputImage;
     }
 }
 
