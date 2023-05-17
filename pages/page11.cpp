@@ -23,26 +23,17 @@ void page11::on_inputImageLabel_clicked()
 {
     fileName = QFileDialog::getOpenFileName(this, "Open Image", "", "Image Files (*.png *.jpg *.bmp *.jpeg)");
     if (!fileName.isEmpty()) {
+        // read colored image
         img = cv::imread(fileName.toStdString());
+        QImage qimage(img.data, img.cols, img.rows, QImage::Format_BGR888);
+        image  = QPixmap::fromImage(qimage);
         int w = ui->inputImageLabel->width();
         int h = ui->inputImageLabel->height();
+        ui->inputImageLabel->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
+        ui->inputImageLabel->setScaledContents(true);
+        if(trained)
+            ui->predict_btn->setEnabled(true);
 
-        if(ui->optionsBox->currentIndex() == 0){
-            QImage qimage(img.data, img.cols, img.rows, QImage::Format_BGR888);
-            image  = QPixmap::fromImage(qimage);
-
-            ui->inputImageLabel->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
-            ui->inputImageLabel->setScaledContents(true);
-            if(trained)
-                ui->predict_btn->setEnabled(true);
-        }else{
-            cv::Mat input(img.size(), img.type());
-            faces_detection::detect_faces(img, input, false);
-            QImage qInputImage(input.data, input.cols, input.rows, QImage::Format_BGR888);
-            QPixmap Input  = QPixmap::fromImage(qInputImage);
-            ui->inputImageLabel->setPixmap(Input.scaled(w, h,Qt::KeepAspectRatio));
-        }
-        ui->predict_btn->setEnabled(true);
     }
 }
 
@@ -140,6 +131,8 @@ void page11::on_select_folder_btn_clicked()
     ui->train_pca_btn->setEnabled(true);
     ui->path_label->setText(folderPath);
     }
+
+
 }
 
 
@@ -165,25 +158,18 @@ void page11::on_train_pca_btn_clicked()
 
 void page11::on_predict_btn_clicked()
 {
-    if(!fileName.isEmpty()){        
-        // Showing the output image label
-        cv::Mat output(img.size(), img.type());
-        faces_detection::detect_faces(img, output, true);
-
-        // Making Recognition
-        cv::Mat img_gray;
-        cv::cvtColor(output, img_gray, cv::IMREAD_GRAYSCALE);
-
+    if(!fileName.isEmpty()){
+        cv::Mat img_gray=cv::imread(fileName.toStdString(),cv::IMREAD_GRAYSCALE);
         std::string label=fr->predictPerson(img_gray);
         label=personToPathMapper[label];
         cv::Mat predictedImg = cv::imread(label,cv::IMREAD_GRAYSCALE);
-
         QImage qimage(predictedImg.data, predictedImg.cols, predictedImg.rows, QImage::Format_Grayscale8);
         QPixmap pred_image  = QPixmap::fromImage(qimage);
         int w = ui->outputImageLabel->width();
         int h = ui->outputImageLabel->height();
         ui->outputImageLabel->setPixmap(pred_image.scaled(w,h,Qt::KeepAspectRatio));
         ui->outputImageLabel->setScaledContents(true);
+
     }
 }
 
@@ -222,6 +208,8 @@ void page11::on_testUploadBtn_clicked()
           fr->generateROC(predictions,testLabels,ROC);
           ui->comboBox_2->setEnabled(true);
       }
+
+
 }
 
 
@@ -246,5 +234,6 @@ void page11::on_comboBox_2_currentIndexChanged(int index)
             plotter::plotAllROC(ui->widget, ROC, fr->labelToPersonMapper);
         }
     }
+// fr->personToLabelmapper
 }
 
