@@ -8,7 +8,7 @@ void faces_detection::detect_faces(cv::Mat& inputImage, cv::Mat& outputImage, bo
 {
     // Load the cascade classifier
     cv::CascadeClassifier face_cascade;
-    face_cascade.load("D:\\Projects\\CV\\Cv-Toolbox\\models\\haarcascade_frontalface_default.xml");
+    face_cascade.load("C:\\Users\\kamel\\OneDrive\\Documents\\GitKraken\\Cv-Toolbox\\models\\haarcascade_frontalface_default.xml");
 
     cv::Mat gray;
     cvtColor(inputImage, gray, cv::COLOR_BGR2GRAY);
@@ -32,8 +32,8 @@ void faces_detection::detect_faces(cv::Mat& inputImage, cv::Mat& outputImage, bo
 
 
 void faces_detection::cropImage(cv::Mat inputImage, cv::Mat& outputImage, cv::Rect faceRect) {
-    int targetWidth = 109;
-    int targetHeight = 109;
+    int targetWidth = 100;
+    int targetHeight = 100;
 
     int widthDifference = targetWidth - faceRect.width;
     int heightDifference = targetHeight - faceRect.height;
