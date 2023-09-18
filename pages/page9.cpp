@@ -1,4 +1,4 @@
-#include "thresholding_page.h"
+#include "page9.h"
 #include "ui_page9.h"
 
 page9::page9(QWidget *parent) :

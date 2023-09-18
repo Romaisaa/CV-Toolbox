@@ -2,16 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "pages/frequency_page.h"
+#include "pages/page3.h"
 //#include "pages/histogram_page.h"
-#include "pages/filters_page.h"
-#include "pages/harris_page.h"
-#include "pages/hough_page.h"
-#include "pages/contour_page.h"
-#include "pages/matching_page.h"
-#include "pages/SIFT_page.h"
-#include "pages/thresholding_page.h"
-#include "pages/segmenation_page.h"
+#include "pages/page1.h"
+#include "pages/page6.h"
+#include "pages/page4.h"
+#include "pages/page5.h"
+#include "pages/page7.h"
+#include "pages/page8.h"
+#include "pages/page9.h"
+#include "pages/page10.h"
 #include "pages/page11.h"
 #include "utilities/clickable.h"
 #include <QFile>

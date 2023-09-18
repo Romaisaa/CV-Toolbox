@@ -1,4 +1,4 @@
-#include "frequency_page.h"
+#include "page3.h"
 #include "ui_page3.h"
 
 

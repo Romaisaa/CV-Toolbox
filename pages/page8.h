@@ -1,5 +1,5 @@
-#ifndef SIFT_PAGE_H
-#define SIFT_PAGE_H
+#ifndef PAGE8_H
+#define PAGE8_H
 
 #include <QWidget>
 #include <QFileDialog>
@@ -46,4 +46,4 @@ private:
     cv::Mat vectorToMat(const vector<vector<float>>& input);
 };
 
-#endif // SIFT_PAGE_H
+#endif // PAGE8_H

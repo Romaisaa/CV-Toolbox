@@ -1,5 +1,5 @@
-#ifndef HISTOGRAM_PAGE_H
-#define HISTOGRAM_PAGE_H
+#ifndef PAGE2_H
+#define PAGE2_H
 
 #include <QWidget>
 #include <QFileDialog>
@@ -60,4 +60,4 @@ private:
     void rescaleImg(QLabel* imgSlot, QPixmap& image);
 };
 
-#endif // HISTOGRAM_PAGE_H
+#endif // PAGE2_H

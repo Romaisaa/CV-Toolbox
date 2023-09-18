@@ -1,5 +1,5 @@
-#ifndef HOUGH_PAGE_H
-#define HOUGH_PAGE_H
+#ifndef PAGE4_H
+#define PAGE4_H
 
 #include <QWidget>
 #include <QFileDialog>
@@ -41,4 +41,4 @@ private:
     Ui::page4 *ui;
 };
 
-#endif // HOUGH_PAGE_H
+#endif // PAGE4_H

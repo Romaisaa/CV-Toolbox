@@ -1,4 +1,4 @@
-#include "SIFT_page.h"
+#include "page8.h"
 #include "ui_page8.h"
 
 page8::page8(QWidget *parent) :

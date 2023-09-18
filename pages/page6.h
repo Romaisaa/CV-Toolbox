@@ -1,5 +1,5 @@
-#ifndef HARRIS_PAGE_H
-#define HARRIS_PAGE_H
+#ifndef PAGE6_H
+#define PAGE6_H
 
 #include <QWidget>
 #include <opencv2/core.hpp>
@@ -41,4 +41,4 @@ private:
 
 };
 
-#endif // HARRIS_PAGE_H
+#endif // PAGE6_H

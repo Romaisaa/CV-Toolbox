@@ -1,5 +1,5 @@
-#ifndef SEGMENATION_PAGE_H
-#define SEGMENATION_PAGE_H
+#ifndef PAGE10_H
+#define PAGE10_H
 
 #include <QWidget>
 #include<CV/segmentation.h>
@@ -40,4 +40,4 @@ private:
     void updateImage();
 };
 
-#endif // SEGMENATION_PAGE_H
+#endif // PAGE10_H

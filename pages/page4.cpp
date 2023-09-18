@@ -1,4 +1,4 @@
-#include "hough_page.h"
+#include "page4.h"
 #include "ui_page4.h"
 
 page4::page4(QWidget *parent) :

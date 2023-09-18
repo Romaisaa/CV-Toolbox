@@ -1,5 +1,5 @@
-#ifndef FREQUENCY_PAGE_H
-#define FREQUENCY_PAGE_H
+#ifndef PAGE3_H
+#define PAGE3_H
 #include <CV/frequency.h>
 #include <QFileDialog>
 #include <QPixmap>
@@ -42,4 +42,4 @@ private:
     cv::Mat high_img;
 };
 
-#endif // FREQUENCY_PAGE_H
+#endif // PAGE3_H

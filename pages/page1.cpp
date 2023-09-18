@@ -1,4 +1,4 @@
-#include "filters_page.h"
+#include "page1.h"
 #include "ui_page1.h"
 #include "CV/filters.h"
 
