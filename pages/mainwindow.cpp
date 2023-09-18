@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("CV ToolKit");
 
     ui->stackedWidget->insertWidget(0,new page1());
-//    ui->stackedWidget->insertWidget(1,new page2());
+    ui->stackedWidget->insertWidget(1,new page2());
     ui->stackedWidget->insertWidget(2,new page3());
     ui->stackedWidget->insertWidget(3,new page4());
     ui->stackedWidget->insertWidget(4,new page5());
@@ -42,9 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(0);
         });
-//    connect(ui->pushButton_2, &QPushButton::clicked, ui->stackedWidget, [=]() {
-//            ui->stackedWidget->setCurrentIndex(1);
-//        });
+    connect(ui->pushButton_2, &QPushButton::clicked, ui->stackedWidget, [=]() {
+            ui->stackedWidget->setCurrentIndex(1);
+        });
     connect(ui->pushButton_3, &QPushButton::clicked, ui->stackedWidget, [=]() {
             ui->stackedWidget->setCurrentIndex(2);
         });
