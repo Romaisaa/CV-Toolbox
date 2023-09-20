@@ -4,13 +4,13 @@
 
 - [Introduction](#introduction)
 - [Full Project Features](#project-features)
-- [Project Structure](#project-structure)
+- [Project Structure Overview](#project-structure-overview)
 - [How to Run The Project](#run-the-project)
-- [Team](#team)
+- [Team](#team-members)
 
 ### Introduction
 
-Computer Vision Toolkit Application is a software solution designed to leverage the power of computer vision algorithms through an intuitive and user-friendly graphical user interface (GUI) developed using the Qt framework. This application aims to provide users with a versatile toolset for image analysis, making it suitable for a wide range of applications, including image processing, object detection,image features extraction, and more.
+Computer Vision Toolbox Application is a software solution designed to leverage the power of computer vision algorithms through an intuitive and user-friendly graphical user interface (GUI) developed using the Qt framework. This application aims to provide users with a versatile toolset for image analysis, making it suitable for a wide range of applications, including image processing, object detection,image features extraction, and more.
 
 ### Project Features:
 
@@ -123,3 +123,46 @@ for more details about this page and results check [Report 4](docs/Report%204.pd
 - if the model already exists, Then the user can work directly without training
 - For new training, user can determine number of PCA components to train a nearest neighbour model.
 - User can upload a test folder to visualise ROC for each label.
+
+### Project Structure Overview:
+
+```
+main
+├─ CV : header/source files related to CV algorithms implementation.
+├─ docs : reports related to results and science behind.
+├─ images : images used for test.
+├─ models : used models in implementation
+├─ pages : include ui/header / resource file related to pages design.
+├─ plot : plotter used for graphs
+├─ resources : resources used for app design.
+├─ style : stylesheets used for app design.
+└─ utilities: used for app ploting and different ui functionality.
+```
+
+### Run the Project
+
+1. Install opencv libaray version 4.7.0 on your machine from [Here](www.opencv.org/releases/).
+
+2. Install QT Creator on your machine from [Here](www.qt.io).
+
+3. Open .pro [file](CV-Toolbox.pro) and replace by paths on your machine:
+
+   ```
+   INCLUDEPATH += C:\opencv\build\include
+   LIBS += C:\opencv\release\bin\libopencv_core470.dll
+   LIBS += C:\opencv\release\bin\libopencv_highgui470.dll
+   LIBS += C:\opencv\release\bin\libopencv_imgcodecs470.dll
+   LIBS += C:\opencv\release\bin\libopencv_imgproc470.dll
+   LIBS += C:\opencv\release\bin\libopencv_features2d470.dll
+   LIBS += C:\opencv\release\bin\libopencv_calib3d470.dll
+   LIBS += C:\opencv\release\bin\libopencv_objdetect470.dll
+
+   ```
+
+4. Run the project.
+
+### Team Members:
+
+- [Kamel Mohamed](https://github.com/KamelMoohamed)
+- [Romaisaa Shrief](https://github.com/Romaisaa)
+- [Youssef Shaaban](https://github.com/youssef-shaban)
