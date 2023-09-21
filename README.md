@@ -1,4 +1,4 @@
-# Computer-Vision-Toolkit
+# Computer-Vision-Toolbox
 
 ## Table of contents:
 
